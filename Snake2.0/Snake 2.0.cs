@@ -10,13 +10,16 @@ using System.Windows.Forms;
 
 namespace Snake2._0
 {
-    public partial class Form1 : Form
+    public partial class SnakeGame : Form
     {
         private List<Circle> Snake = new List<Circle>();
         private Circle food = new Circle();
         private DateTime runningTime;
 
-        public Form1()
+        /// <summary>
+        /// Constructor: Sets game to default state and initializes game timers. 
+        /// </summary>
+        public SnakeGame()
         {
             InitializeComponent();
 
@@ -36,6 +39,9 @@ namespace Snake2._0
             StartGame();
         }
 
+        /// <summary>
+        /// Initializes a snake and some food for it to eat. Initializes the score.
+        /// </summary>
         private void StartGame()
         {
             labelGameOver.Visible = false;
@@ -66,7 +72,9 @@ namespace Snake2._0
             GenerateFood();
         }
 
-        // place food at random location
+        /// <summary>
+        /// Places food at random locations in the game screen.
+        /// </summary>
         private void GenerateFood()
         {
             int maxXPos = PlayScreen.Size.Width / Settings.Width;
@@ -77,7 +85,12 @@ namespace Snake2._0
             food.Y = rand.Next(0, maxYPos);
         }
 
-        //Key press down event
+        /// <summary>
+        /// Key down press events.
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             KeyPressedEvents.ChangeState(Keys.Left, false);
@@ -110,11 +123,11 @@ namespace Snake2._0
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void UpdateTime(object sender, EventArgs e)
-        {
-
-        }
-        //Updates the screen and checks if game over
+        /// <summary>
+        /// Updates the screen and checks if game over.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateScreen(object sender, EventArgs e)
         {
             //Check for game over
@@ -143,6 +156,11 @@ namespace Snake2._0
             PlayScreen.Invalidate();
         }
 
+        /// <summary>
+        /// Sets default parameters for snake and food.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayScreen_Paint(object sender, PaintEventArgs e)
         {
             Graphics canvas = e.Graphics;
@@ -180,6 +198,9 @@ namespace Snake2._0
             }
         }
 
+        /// <summary>
+        /// Moves the snake depending on which key is pressed.
+        /// </summary>
         private void MovePlayer()
         {
             try
@@ -245,14 +266,18 @@ namespace Snake2._0
 
         }
 
-        //Called when the player collides with objects
+        /// <summary>
+        /// Called when the player collides with objects.
+        /// </summary>
         private void Die()
         {
             Settings.GameOver = true;
             GameTimer.Stop();
         }
 
-        //Called when snake collides with food
+        /// <summary>
+        /// Called when snake collides with food.
+        /// </summary>
         private void Eat()
         {
             //Add another body piece
@@ -268,6 +293,10 @@ namespace Snake2._0
 
             GenerateFood();
         }
+
+        /// <summary>
+        /// Called when the pause button is pressed.
+        /// </summary>
         private void pauseGame()
         {
             if (Settings.Paused == false)
@@ -282,16 +311,22 @@ namespace Snake2._0
             }
         }
 
+        /// <summary>
+        /// The game pauses.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Pause_Click(object sender, EventArgs e)
         {
             pauseGame();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Tracks the timer on every tick.
+        /// Updates the timer label "Time" in format mm:ss.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             var diff = DateTime.Now.Subtract(runningTime);

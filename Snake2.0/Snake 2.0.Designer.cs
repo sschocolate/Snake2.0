@@ -1,6 +1,6 @@
 ﻿namespace Snake2._0
 {
-    partial class Form1
+    partial class SnakeGame
     {
         /// <summary>
         /// Required designer variable.
@@ -114,7 +114,7 @@
             this.labelGameOver.Text = "Game Over";
             this.labelGameOver.Visible = false;
             // 
-            // Form1
+            // SnakeGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -126,9 +126,8 @@
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.ScoreLabel);
             this.Controls.Add(this.PlayScreen);
-            this.Name = "Form1";
+            this.Name = "SnakeGame";
             this.Text = "Snake 2.0";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PlayScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
