@@ -14,6 +14,8 @@ namespace Snake2._0
     {
         private List<Circle> Snake = new List<Circle>();
         private Circle food = new Circle();
+        private DateTime runningTime;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +29,7 @@ namespace Snake2._0
             GameTimer.Interval = 1000 / Settings.Speed;
             GameTimer.Tick += UpdateScreen;
             GameTimer.Tick += UpdateTime;
+            runningTime = DateTime.Now;
             GameTimer.Start();
 
             //Start new game
@@ -109,7 +112,7 @@ namespace Snake2._0
 
         private void UpdateTime(object sender, EventArgs e)
         {
-            Time.Text += 1;
+
         }
         //Updates the screen and checks if game over
         private void UpdateScreen(object sender, EventArgs e)
@@ -246,6 +249,7 @@ namespace Snake2._0
         private void Die()
         {
             Settings.GameOver = true;
+            GameTimer.Stop();
         }
 
         //Called when snake collides with food
@@ -281,6 +285,17 @@ namespace Snake2._0
         private void Pause_Click(object sender, EventArgs e)
         {
             pauseGame();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            var diff = DateTime.Now.Subtract(runningTime);
+            this.Time.Text = diff.ToString(@"mm\:ss");
         }
     }
 }

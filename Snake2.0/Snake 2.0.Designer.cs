@@ -75,9 +75,8 @@
             this.Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Time.Location = new System.Drawing.Point(71, 9);
             this.Time.Name = "Time";
-            this.Time.Size = new System.Drawing.Size(66, 25);
+            this.Time.Size = new System.Drawing.Size(0, 25);
             this.Time.TabIndex = 3;
-            this.Time.Text = "00:00";
             // 
             // Score
             // 
@@ -99,6 +98,10 @@
             this.Pause.Text = "| |";
             this.Pause.UseVisualStyleBackColor = true;
             this.Pause.Click += new System.EventHandler(this.Pause_Click);
+            // 
+            // GameTimer
+            // 
+            this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
             // labelGameOver
             // 
@@ -125,6 +128,7 @@
             this.Controls.Add(this.PlayScreen);
             this.Name = "Form1";
             this.Text = "Snake 2.0";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PlayScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
