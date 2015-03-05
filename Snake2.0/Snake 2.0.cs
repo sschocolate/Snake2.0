@@ -31,7 +31,6 @@ namespace Snake2._0
             //Set game speed and start timer
             GameTimer.Interval = 1000 / Settings.Speed;
             GameTimer.Tick += UpdateScreen;
-            GameTimer.Tick += UpdateTime;
             runningTime = DateTime.Now;
             GameTimer.Start();
 
