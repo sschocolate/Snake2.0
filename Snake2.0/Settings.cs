@@ -10,6 +10,10 @@ namespace Snake2._0
     {
         Up,Down,Left,Right
     };
+
+    /// <summary>
+    /// The default settings of the snake game.
+    /// </summary>
     class Settings
     {
         public static int Width { get; set; }
@@ -21,6 +25,9 @@ namespace Snake2._0
         public static bool Paused { get; set; }
         public static Direction direction { get; set; }
 
+        /// <summary>
+        /// Constructor: Contains the initial default parameters of the game.
+        /// </summary>
         public Settings()
         {
             Width = 16;
