@@ -10,6 +10,18 @@ using System.Windows.Forms;
 
 namespace Snake2._0
 {
+    /// <summary>
+    /// This is our main class for the game. It contains all basic functionalities
+    /// that make our game work.
+    /// This class contains methods for: starting, initializing, generating food pieces,
+    ///                                  processing keyboard events, drawing onto the screen,
+    ///                                  the paint method for the picturebox, player movement,
+    ///                                  interaction between snake and game board, and the
+    ///                                  pause functionality.
+    /// For our prototype, all these methods are in one class; however, as we progress we
+    /// will separate them into different classes if applicable.
+    /// Some of this code was taken from an online author's tutorial on youtube (Michiel Wouters)
+    /// </summary>
     public partial class SnakeGame : Form
     {
         private List<Circle> Snake = new List<Circle>();
@@ -18,6 +30,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
+        /// Author: Michiel Wouters
         /// </summary>
         public SnakeGame()
         {
@@ -73,6 +86,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Places food at random locations in the game screen.
+        /// Author: Michiel Wouters
         /// </summary>
         private void GenerateFood()
         {
@@ -85,7 +99,8 @@ namespace Snake2._0
         }
 
         /// <summary>
-        /// Key down press events.
+        /// Key down press events. This is one of the ways i found to detect arrow key presses.
+        /// Using KetEvents, it will not allow me to detect awwor keys.
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="keyData"></param>
@@ -124,6 +139,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Updates the screen and checks if game over.
+        /// Author: Michiel Wouters
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -157,6 +173,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Sets default parameters for snake and food.
+        /// Author: Michiel Wouters
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -199,6 +216,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Moves the snake depending on which key is pressed.
+        /// Author: Michiel Wouters
         /// </summary>
         private void MovePlayer()
         {
@@ -267,6 +285,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Called when the player collides with objects.
+        /// Author: Michiel Wouters
         /// </summary>
         private void Die()
         {
@@ -276,6 +295,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Called when snake collides with food.
+        /// Author: Michiel Wouters
         /// </summary>
         private void Eat()
         {

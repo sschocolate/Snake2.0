@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Snake2._0
 {
+    /// <summary>
+    /// This class is the basic unit used for our game.
+    /// For now it is just properties of a circle.
+    /// We intend to alter this to use a user control instead.
+    /// </summary>
     class Circle
     {
         public int X { get; set;}

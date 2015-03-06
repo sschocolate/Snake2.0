@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Snake2._0
 {
+    /// <summary>
+    /// Enumerated type for the direction our player snake is facing.
+    /// </summary>
     public enum Direction
     {
         Up,Down,Left,Right
@@ -13,6 +16,7 @@ namespace Snake2._0
 
     /// <summary>
     /// The default settings of the snake game.
+    /// Author: Michiel Wouters
     /// </summary>
     class Settings
     {
@@ -26,7 +30,7 @@ namespace Snake2._0
         public static Direction direction { get; set; }
 
         /// <summary>
-        /// Constructor: Contains the initial default parameters of the game.
+        /// Constructor: Initializes default parameters of the game.
         /// </summary>
         public Settings()
         {
