@@ -41,5 +41,110 @@ namespace Snake2._0
                                   Settings.Width, Settings.Height));
             }
         }
+
+        /// <summary>
+        /// Automated enemy movement.
+        /// </summary>
+        public static void Move()
+        {
+            // Random number generator for determining direction of enemy movement.
+            var random = new Random();
+            int num = random.Next(100);
+            string dir = "up";
+            if(num > 0 && num < 25)
+            {
+                dir = "up";
+            }
+            else if(num > 25 && num < 50)
+            {
+                dir = "down";
+            }
+            else if(num > 50 && num < 75)
+            {
+                dir = "left";
+            }
+            else if(num > 75 && num < 100)
+            {
+                dir = "right";
+            }
+            
+            switch(dir)
+            {
+                case "down":
+                    if(Enemy.enemy[0].Y < 0 || Enemy.enemy[3].Y < 0)
+                    {
+                        Enemy.enemy[0].Y++;
+                        Enemy.enemy[1].Y++;
+                        Enemy.enemy[2].Y++;
+                        Enemy.enemy[3].Y++;
+                    }
+                    else
+                    {
+                        Enemy.enemy[0].Y--;
+                        Enemy.enemy[1].Y--;
+                        Enemy.enemy[2].Y--;
+                        Enemy.enemy[3].Y--;
+                    }
+
+                    break;
+
+                case "up":
+                    if(Enemy.enemy[0].Y > Settings.Height || Enemy.enemy[3].Y > Settings.Height)
+                    {
+                        Enemy.enemy[0].Y--;
+                        Enemy.enemy[1].Y--;
+                        Enemy.enemy[2].Y--;
+                        Enemy.enemy[3].Y--;
+                    }
+                    else
+                    {
+                        Enemy.enemy[0].Y++;
+                        Enemy.enemy[1].Y++;
+                        Enemy.enemy[2].Y++;
+                        Enemy.enemy[3].Y++;
+                    }
+
+                    break;
+
+                case "right":
+                    if (Enemy.enemy[0].X < 0 || Enemy.enemy[2].X < 0)
+                    {
+                        Enemy.enemy[0].X++;
+                        Enemy.enemy[1].X++;
+                        Enemy.enemy[2].X++;
+                        Enemy.enemy[3].X++;
+                    }
+                    else
+                    {
+                        Enemy.enemy[0].X--;
+                        Enemy.enemy[1].X--;
+                        Enemy.enemy[2].X--;
+                        Enemy.enemy[3].X--;
+                    }
+
+                    break;
+
+                case "left":
+                    if (Enemy.enemy[0].X > Settings.Width || Enemy.enemy[3].X > Settings.Width)
+                    {
+                        Enemy.enemy[0].X--;
+                        Enemy.enemy[1].X--;
+                        Enemy.enemy[2].X--;
+                        Enemy.enemy[3].X--;
+                    }
+                    else
+                    {
+                        Enemy.enemy[0].X++;
+                        Enemy.enemy[1].X++;
+                        Enemy.enemy[2].X++;
+                        Enemy.enemy[3].X++;
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }

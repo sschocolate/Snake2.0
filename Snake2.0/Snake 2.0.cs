@@ -144,7 +144,10 @@ namespace Snake2._0
             {
                 Player.Move();
                 CheckCollision();
+
+                Enemy.Move();
             }
+
             PlayScreen.Invalidate();
         }
 
