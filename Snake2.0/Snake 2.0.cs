@@ -24,9 +24,11 @@ namespace Snake2._0
     /// </summary>
     public partial class SnakeGame : Form
     {
-        private List<Circle> Snake = new List<Circle>();
-        private Circle food = new Circle();
-        private DateTime runningTime;
+        private int runningTime;
+        private int maxXPos;
+        private int maxYPos;
+        private static Food food;
+        private static Enemy enemy;
 
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
@@ -41,11 +43,19 @@ namespace Snake2._0
             //Set player control keys
             KeyPressedEvents.initializeKeys();
 
+            maxXPos = PlayScreen.Size.Width / Settings.Width;
+            maxYPos = PlayScreen.Size.Height / Settings.Height;
             //Set game speed and start timer
-            GameTimer.Interval = 1000 / Settings.Speed;
-            GameTimer.Tick += UpdateScreen;
-            runningTime = DateTime.Now;
-            GameTimer.Start();
+            try
+            {
+                ActionTimer.Interval = 1000 / Settings.Speed;
+                ActionTimer.Start();
+                GameTime.Start();
+            }
+            catch (DivideByZeroException e)
+            {
+                MessageBox.Show("Divide by zero Exception caught.");
+            }
 
             //Start new game
             StartGame();
@@ -57,45 +67,20 @@ namespace Snake2._0
         private void StartGame()
         {
             labelGameOver.Visible = false;
-            //Set settings to default
+            //Set variables to default state
             new Settings();
+            runningTime = 0;
+            this.Time.Text = "00:00";
 
             //Create new player
-            Snake.Clear();
-            Circle head = new Circle();
-            head.X = 19;
-            head.Y = 19;
-            Circle body1 = new Circle();
-            body1.X = head.X;
-            body1.Y = head.Y;
-            Circle body2 = new Circle();
-            body2.X = body1.X;
-            body2.Y = body1.Y;
-            Circle body3 = new Circle();
-            body3.X = body2.X;
-            body3.Y = body2.Y;
+            Player player = new Player();
 
-            Snake.Add(head);
-            Snake.Add(body1);
-            Snake.Add(body2);
-            Snake.Add(body3);
-
+            //set score to 0
             Score.Text = Settings.Score.ToString();
-            GenerateFood();
-        }
 
-        /// <summary>
-        /// Places food at random locations in the game screen.
-        /// Author: Michiel Wouters
-        /// </summary>
-        private void GenerateFood()
-        {
-            int maxXPos = PlayScreen.Size.Width / Settings.Width;
-            int maxYPos = PlayScreen.Size.Height / Settings.Height;
-
-            Random rand = new Random();
-            food.X = rand.Next(0, maxXPos);
-            food.Y = rand.Next(0, maxYPos);
+            //Generate food object
+            food = new Food(maxXPos, maxYPos);
+            enemy = new Enemy(maxXPos, maxYPos);
         }
 
         /// <summary>
@@ -111,7 +96,6 @@ namespace Snake2._0
             KeyPressedEvents.ChangeState(Keys.Right, false);
             KeyPressedEvents.ChangeState(Keys.Up, false);
             KeyPressedEvents.ChangeState(Keys.Down, false);
-            KeyPressedEvents.ChangeState(Keys.Enter, false);
             switch (keyData)
             {
                 case Keys.Left:
@@ -157,16 +141,8 @@ namespace Snake2._0
             }
             else
             {
-                if (KeyPressedEvents.KeyPressed(Keys.Right) && Settings.direction != Direction.Left)
-                    Settings.direction = Direction.Right;
-                else if (KeyPressedEvents.KeyPressed(Keys.Left) && Settings.direction != Direction.Right)
-                    Settings.direction = Direction.Left;
-                else if (KeyPressedEvents.KeyPressed(Keys.Up) && Settings.direction != Direction.Down)
-                    Settings.direction = Direction.Up;
-                else if (KeyPressedEvents.KeyPressed(Keys.Down) && Settings.direction != Direction.Up)
-                    Settings.direction = Direction.Down;
-
-                MovePlayer();
+                Player.Move();
+                CheckCollision();
             }
             PlayScreen.Invalidate();
         }
@@ -179,32 +155,14 @@ namespace Snake2._0
         /// <param name="e"></param>
         private void PlayScreen_Paint(object sender, PaintEventArgs e)
         {
-            Graphics canvas = e.Graphics;
-
             if(Settings.GameOver != true)
             {
-                // Set colour of snake
-                Brush snakeColour;
-                //Draw snake
-                for (int i = 0; i <= Snake.Count - 1; i++)
-                {
-                    if (i == 0)
-                        snakeColour = Brushes.Black; //Head
-                    else
-                        snakeColour = Brushes.Green; //Body
-
-                    //Draw
-                    canvas.FillEllipse(snakeColour,
-                        new Rectangle(Snake[i].X * Settings.Width,
-                                      Snake[i].Y * Settings.Height,
-                                      Settings.Width, Settings.Height));
-
-                }
+                //Drawy player
+                Player.Draw(e);
                 //Draw food
-                canvas.FillEllipse(Brushes.Red,
-                    new Rectangle(food.X * Settings.Width,
-                                  food.Y * Settings.Height,
-                                  Settings.Width, Settings.Height));
+                Food.Draw(e);
+                //Draw enemy
+                Enemy.Draw(e);
             }
             else
             {
@@ -218,62 +176,30 @@ namespace Snake2._0
         /// Moves the snake depending on which key is pressed.
         /// Author: Michiel Wouters
         /// </summary>
-        private void MovePlayer()
+        private void CheckCollision()
         {
             try
             {
-                for (int i = Snake.Count - 1; i >= 0; i--)
+                //Detect collision with border
+                if (Player.Snake[0].X < 0 || Player.Snake[0].Y < 0
+                    || Player.Snake[0].X >= maxXPos || Player.Snake[0].Y >= maxYPos)
                 {
-                    //Move head
-                    if (i == 0)
+                    Die();
+                }
+
+                //Detect collision with body
+                for (int j = 1; j < Player.Snake.Count; j++)
+                {
+                    if (Player.Snake[0].X == Player.Snake[j].X && Player.Snake[0].Y == Player.Snake[j].Y)
                     {
-                        switch (Settings.direction)
-                        {
-                            case Direction.Right:
-                                Snake[0].X++;
-                                break;
-                            case Direction.Left:
-                                Snake[0].X--;
-                                break;
-                            case Direction.Up:
-                                Snake[0].Y--;
-                                break;
-                            case Direction.Down:
-                                Snake[0].Y++;
-                                break;
-                        }
-
-                        //Get game field sizes
-                        int maxXPos = PlayScreen.Size.Width / Settings.Width;
-                        int maxYPos = PlayScreen.Size.Height / Settings.Height;
-
-                        //Detect collision with border
-                        if(Snake[i].X < 0 || Snake[i].Y < 0 
-                            || Snake[i].X >= maxXPos || Snake[i].Y >= maxYPos)
-                        {
-                            Die();
-                        }
-
-                        //Detect collision with body
-                        for(int j = 1; j < Snake.Count; j++)
-                        {
-                            if(Snake[i].X == Snake[j].X && Snake[i].Y == Snake[j].Y)
-                            {
-                                Die();
-                            }
-                        }
-
-                        //Detect collision with food piece
-                        if(Snake[0].X == food.X && Snake[0].Y == food.Y)
-                        {
-                            Eat();
-                        }
+                        Die();
                     }
-                    else
-                    {
-                        Snake[i].X = Snake[i - 1].X;
-                        Snake[i].Y = Snake[i - 1].Y;
-                    }
+                }
+
+                //Detect collision with food piece
+                if (Player.Snake[0].X == Food.X && Player.Snake[0].Y == Food.Y)
+                {
+                    Eat();
                 }
             }
             catch (Exception)
@@ -290,7 +216,8 @@ namespace Snake2._0
         private void Die()
         {
             Settings.GameOver = true;
-            GameTimer.Stop();
+            ActionTimer.Stop();
+            GameTime.Stop();
         }
 
         /// <summary>
@@ -301,16 +228,16 @@ namespace Snake2._0
         {
             //Add another body piece
             Circle body = new Circle();
-            body.X = Snake[Snake.Count - 1].X;
-            body.Y = Snake[Snake.Count - 1].Y;
-                    
-            Snake.Add(body);
+            body.X = Player.Snake[Player.Snake.Count - 1].X;
+            body.Y = Player.Snake[Player.Snake.Count - 1].Y;
+
+            Player.Snake.Add(body);
 
             //Update Score
             Settings.Score += Settings.Points;
             Score.Text = Settings.Score.ToString();
 
-            GenerateFood();
+            food = new Food(maxXPos, maxYPos);
         }
 
         /// <summary>
@@ -321,12 +248,14 @@ namespace Snake2._0
             if (Settings.Paused == false)
             {
                 Settings.Paused = true;
-                GameTimer.Stop();
+                ActionTimer.Stop();
+                GameTime.Stop();
             }
             else
             {
                 Settings.Paused = false;
-                GameTimer.Start();
+                ActionTimer.Start();
+                GameTime.Start();
             }
         }
 
@@ -346,10 +275,18 @@ namespace Snake2._0
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GameTimer_Tick(object sender, EventArgs e)
+        private void GameTime_Tick(object sender, EventArgs e)
         {
-            var diff = DateTime.Now.Subtract(runningTime);
-            this.Time.Text = diff.ToString(@"mm\:ss");
+            runningTime += 1;
+            TimeSpan time = TimeSpan.FromSeconds(runningTime);
+            if (runningTime < 3600)
+            {
+                this.Time.Text = time.ToString(@"mm\:ss");
+            }
+            else
+            {
+                this.Time.Text = time.ToString(@"hh\:mm\:ss");
+            }
         }
     }
 }

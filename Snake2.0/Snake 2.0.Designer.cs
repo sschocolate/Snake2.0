@@ -35,13 +35,15 @@
             this.Time = new System.Windows.Forms.Label();
             this.Score = new System.Windows.Forms.Label();
             this.Pause = new System.Windows.Forms.Button();
-            this.GameTimer = new System.Windows.Forms.Timer(this.components);
+            this.ActionTimer = new System.Windows.Forms.Timer(this.components);
             this.labelGameOver = new System.Windows.Forms.Label();
+            this.GameTime = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PlayScreen)).BeginInit();
             this.SuspendLayout();
             // 
             // PlayScreen
             // 
+            this.PlayScreen.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.PlayScreen.Location = new System.Drawing.Point(12, 43);
             this.PlayScreen.Name = "PlayScreen";
             this.PlayScreen.Size = new System.Drawing.Size(604, 385);
@@ -99,13 +101,15 @@
             this.Pause.UseVisualStyleBackColor = true;
             this.Pause.Click += new System.EventHandler(this.Pause_Click);
             // 
-            // GameTimer
+            // ActionTimer
             // 
-            this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
+            this.ActionTimer.Interval = 1000;
+            this.ActionTimer.Tick += new System.EventHandler(this.UpdateScreen);
             // 
             // labelGameOver
             // 
             this.labelGameOver.AutoSize = true;
+            this.labelGameOver.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.labelGameOver.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelGameOver.Location = new System.Drawing.Point(161, 158);
             this.labelGameOver.Name = "labelGameOver";
@@ -113,6 +117,11 @@
             this.labelGameOver.TabIndex = 6;
             this.labelGameOver.Text = "Game Over";
             this.labelGameOver.Visible = false;
+            // 
+            // GameTime
+            // 
+            this.GameTime.Interval = 1000;
+            this.GameTime.Tick += new System.EventHandler(this.GameTime_Tick);
             // 
             // SnakeGame
             // 
@@ -136,14 +145,15 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox PlayScreen;
         private System.Windows.Forms.Label ScoreLabel;
         private System.Windows.Forms.Label TimeLabel;
         private System.Windows.Forms.Label Time;
         private System.Windows.Forms.Label Score;
         private System.Windows.Forms.Button Pause;
-        private System.Windows.Forms.Timer GameTimer;
+        private System.Windows.Forms.Timer ActionTimer;
         private System.Windows.Forms.Label labelGameOver;
+        private System.Windows.Forms.Timer GameTime;
+        internal System.Windows.Forms.PictureBox PlayScreen;
     }
 }
 

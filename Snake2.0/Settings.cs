@@ -27,7 +27,7 @@ namespace Snake2._0
         public static int Points { get; set; }
         public static bool GameOver { get; set; }
         public static bool Paused { get; set; }
-        public static Direction direction { get; set; }
+        public static Random rand = new Random();
 
         /// <summary>
         /// Constructor: Initializes default parameters of the game.
@@ -41,7 +41,6 @@ namespace Snake2._0
             Points = 100;
             GameOver = false;
             Paused = false;
-            direction = Direction.Up;
         }
     }
 }

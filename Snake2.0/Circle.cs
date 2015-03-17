@@ -21,5 +21,10 @@ namespace Snake2._0
             X = 0;
             Y = 0;
         }
+        public Circle(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
