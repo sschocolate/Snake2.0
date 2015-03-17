@@ -19,7 +19,7 @@ namespace Snake2._0
     /// </summary>
     public enum BonusType
     {
-        Retaliate, Shrink, Slow, ScoreMultiplier, PointsBig, PointsMed, PointsSm
+        Retaliate, Shrink, Grow, Slow, SpeedUp, ScoreMultiplier, PointsBig, PointsMed, PointsSm
     }
 
     /// <summary>
