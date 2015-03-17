@@ -27,8 +27,6 @@ namespace Snake2._0
         private int runningTime;
         private int maxXPos;
         private int maxYPos;
-        private static Food food;
-        private static Enemy enemy;
 
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
@@ -79,8 +77,11 @@ namespace Snake2._0
             Score.Text = Settings.Score.ToString();
 
             //Generate food object
-            food = new Food(maxXPos, maxYPos);
-            enemy = new Enemy(maxXPos, maxYPos);
+            new Food(maxXPos, maxYPos);
+            //Generate enemy object
+            new Enemy(maxXPos, maxYPos);
+            //Generate collectable object
+            new Collectable(maxXPos, maxYPos);
         }
 
         /// <summary>
@@ -163,6 +164,8 @@ namespace Snake2._0
                 Food.Draw(e);
                 //Draw enemy
                 Enemy.Draw(e);
+                //Draw collectable
+                Collectable.Draw(e);
             }
             else
             {
@@ -196,10 +199,25 @@ namespace Snake2._0
                     }
                 }
 
+                //Detect collision with Enemy
+                for (int i = 0; i < Enemy.enemy.Count; i++)
+                {
+                    if (Player.Snake[0].X == Enemy.enemy[i].X && Player.Snake[0].Y == Enemy.enemy[i].Y)
+                    {
+                        Die();
+                    }
+                }
+
                 //Detect collision with food piece
                 if (Player.Snake[0].X == Food.X && Player.Snake[0].Y == Food.Y)
                 {
                     Eat();
+                }
+
+                //Detect collision with a Collectable
+                if (Player.Snake[0].X == Collectable.X && Player.Snake[0].Y == Collectable.Y)
+                {
+                    new Collectable(maxXPos, maxYPos);
                 }
             }
             catch (Exception)
@@ -237,7 +255,7 @@ namespace Snake2._0
             Settings.Score += Settings.Points;
             Score.Text = Settings.Score.ToString();
 
-            food = new Food(maxXPos, maxYPos);
+            new Food(maxXPos, maxYPos);
         }
 
         /// <summary>

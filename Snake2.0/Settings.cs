@@ -15,6 +15,14 @@ namespace Snake2._0
     };
 
     /// <summary>
+    /// Enumerated type for the types of collectable objects
+    /// </summary>
+    public enum BonusType
+    {
+        Retaliate, Shrink, Slow, ScoreMultiplier, PointsBig, PointsMed, PointsSm
+    }
+
+    /// <summary>
     /// The default settings of the snake game.
     /// Author: Michiel Wouters
     /// </summary>
