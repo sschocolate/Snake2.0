@@ -214,12 +214,14 @@ namespace Snake2._0
                 //Detect collision with food piece
                 if (Player.Snake[0].X == Food.X && Player.Snake[0].Y == Food.Y)
                 {
-                    Eat();
+                    EatFood();
                 }
 
                 //Detect collision with a Collectable
                 if (Player.Snake[0].X == Collectable.X && Player.Snake[0].Y == Collectable.Y)
                 {
+                    string type = Collectable.type.ToString();
+                    //EatPower(type);
                     new Collectable(maxXPos, maxYPos);
                 }
             }
@@ -245,7 +247,7 @@ namespace Snake2._0
         /// Called when snake collides with food.
         /// Author: Michiel Wouters
         /// </summary>
-        private void Eat()
+        private void EatFood()
         {
             //Add another body piece
             Circle body = new Circle();
@@ -259,6 +261,19 @@ namespace Snake2._0
             Score.Text = Settings.Score.ToString();
 
             new Food(maxXPos, maxYPos);
+        }
+
+        private void EatPower(BonusType type)
+        {
+               switch(type)
+               {
+                   //case BonusType.Type:
+                     //  Score.Text = "BIG";
+                       //break;
+
+                   default:
+                       break;
+               }
         }
 
         /// <summary>

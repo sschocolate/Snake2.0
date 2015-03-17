@@ -51,19 +51,19 @@ namespace Snake2._0
             var random = new Random();
             int num = random.Next(100);
             string dir = "up";
-            if(num > 0 && num < 25)
+            if(num >= 0 && num <= 24)
             {
                 dir = "up";
             }
-            else if(num > 25 && num < 50)
+            else if(num >= 25 && num <= 49)
             {
                 dir = "down";
             }
-            else if(num > 50 && num < 75)
+            else if(num >= 50 && num <= 74)
             {
                 dir = "left";
             }
-            else if(num > 75 && num < 100)
+            else if(num >= 75 && num < 99)
             {
                 dir = "right";
             }
