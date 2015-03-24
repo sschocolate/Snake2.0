@@ -43,108 +43,58 @@ namespace Snake2._0
         }
 
         /// <summary>
-        /// Automated enemy movement.
+        /// Determines direction of enemy movement.
         /// </summary>
-        public static void Move()
+        public static int MoveDir()
         {
-            // Random number generator for determining direction of enemy movement.
-            var random = new Random();
-            int num = random.Next(100);
-            string dir = "up";
-            if(num >= 0 && num <= 24)
+            Random rngMove = new Random();
+            return rngMove.Next(4);
+        }
+
+        /// <summary>
+        /// Determines number of spaces to move enemy and moves enemy.
+        /// </summary>
+        /// <returns></returns>
+        public static int Move(int direction, int amount)
+        {   
+            if(direction == Settings.LEFT)
             {
-                dir = "up";
+                Enemy.enemy[0].X -= amount;
+                Enemy.enemy[1].X -= amount;
+                Enemy.enemy[2].X -= amount;
+                Enemy.enemy[3].X -= amount;
+
+                return Settings.LEFT;
             }
-            else if(num >= 25 && num <= 49)
+            else if(direction == Settings.RIGHT)
             {
-                dir = "down";
+                Enemy.enemy[0].X++;
+                Enemy.enemy[1].X++;
+                Enemy.enemy[2].X++;
+                Enemy.enemy[3].X++;
+
+                return Settings.RIGHT;
             }
-            else if(num >= 50 && num <= 74)
+            else if(direction == Settings.UP)
             {
-                dir = "left";
+                Enemy.enemy[0].Y--;
+                Enemy.enemy[1].Y--;
+                Enemy.enemy[2].Y--;
+                Enemy.enemy[3].Y--;
+
+                return Settings.UP;
             }
-            else if(num >= 75 && num < 99)
+            else if(direction == Settings.DOWN)
             {
-                dir = "right";
+                Enemy.enemy[0].Y++;
+                Enemy.enemy[1].Y++;
+                Enemy.enemy[2].Y++;
+                Enemy.enemy[3].Y++;
+
+                return Settings.DOWN;
             }
-            
-            switch(dir)
-            {
-                case "down":
-                    if(Enemy.enemy[0].Y < 0 || Enemy.enemy[3].Y < 0)
-                    {
-                        Enemy.enemy[0].Y++;
-                        Enemy.enemy[1].Y++;
-                        Enemy.enemy[2].Y++;
-                        Enemy.enemy[3].Y++;
-                    }
-                    else
-                    {
-                        Enemy.enemy[0].Y--;
-                        Enemy.enemy[1].Y--;
-                        Enemy.enemy[2].Y--;
-                        Enemy.enemy[3].Y--;
-                    }
 
-                    break;
-
-                case "up":
-                    if(Enemy.enemy[0].Y > Settings.Height || Enemy.enemy[3].Y > Settings.Height)
-                    {
-                        Enemy.enemy[0].Y--;
-                        Enemy.enemy[1].Y--;
-                        Enemy.enemy[2].Y--;
-                        Enemy.enemy[3].Y--;
-                    }
-                    else
-                    {
-                        Enemy.enemy[0].Y++;
-                        Enemy.enemy[1].Y++;
-                        Enemy.enemy[2].Y++;
-                        Enemy.enemy[3].Y++;
-                    }
-
-                    break;
-
-                case "right":
-                    if (Enemy.enemy[0].X < 0 || Enemy.enemy[2].X < 0)
-                    {
-                        Enemy.enemy[0].X++;
-                        Enemy.enemy[1].X++;
-                        Enemy.enemy[2].X++;
-                        Enemy.enemy[3].X++;
-                    }
-                    else
-                    {
-                        Enemy.enemy[0].X--;
-                        Enemy.enemy[1].X--;
-                        Enemy.enemy[2].X--;
-                        Enemy.enemy[3].X--;
-                    }
-
-                    break;
-
-                case "left":
-                    if (Enemy.enemy[0].X > Settings.Width || Enemy.enemy[3].X > Settings.Width)
-                    {
-                        Enemy.enemy[0].X--;
-                        Enemy.enemy[1].X--;
-                        Enemy.enemy[2].X--;
-                        Enemy.enemy[3].X--;
-                    }
-                    else
-                    {
-                        Enemy.enemy[0].X++;
-                        Enemy.enemy[1].X++;
-                        Enemy.enemy[2].X++;
-                        Enemy.enemy[3].X++;
-                    }
-
-                    break;
-
-                default:
-                    break;
-            }
+            return -1;
         }
     }
 }

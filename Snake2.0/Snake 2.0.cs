@@ -27,6 +27,9 @@ namespace Snake2._0
         private int runningTime;
         private int maxXPos;
         private int maxYPos;
+        private int dirMoved = -1;
+        private Random rngMove;
+        private Random afterCollisionMove;
 
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
@@ -52,7 +55,7 @@ namespace Snake2._0
             }
             catch (DivideByZeroException e)
             {
-                MessageBox.Show("Divide by zero Exception caught.");
+                MessageBox.Show(e.ToString());
             }
 
             //Start new game
@@ -145,7 +148,53 @@ namespace Snake2._0
                 Player.Move();
                 CheckCollision();
 
-                Enemy.Move();
+                rngMove = new Random();
+                int move = rngMove.Next(3);
+
+                if(!CheckEnemyCollision())
+                {
+                    if (Enemy.MoveDir() == Settings.LEFT)
+                    {
+                        dirMoved = Enemy.Move(Settings.LEFT, move); 
+                    }
+                    else
+                    if(Enemy.MoveDir() == Settings.RIGHT)
+                    {
+                        dirMoved = Enemy.Move(Settings.RIGHT, move);
+                    }
+                    else
+                    if(Enemy.MoveDir() == Settings.UP)
+                    {
+                        dirMoved = Enemy.Move(Settings.UP, move);
+                    }
+                    else
+                    if(Enemy.MoveDir() == Settings.DOWN)
+                    {
+                        dirMoved = Enemy.Move(Settings.DOWN, move);
+                    }
+                }
+                else
+                {
+                    if(dirMoved == Settings.LEFT)
+                    {
+                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
+                    }
+                    else
+                    if(dirMoved == Settings.RIGHT)
+                    {
+                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
+                    }
+                    else
+                    if(dirMoved == Settings.UP)
+                    {
+                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
+                    }
+                    else
+                    if(dirMoved == Settings.DOWN)
+                    {
+                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
+                    }
+                }
             }
 
             PlayScreen.Invalidate();
@@ -230,6 +279,19 @@ namespace Snake2._0
                 MessageBox.Show("Array out of bounds Exception occured.");
             }
 
+        }
+
+        private bool CheckEnemyCollision()
+        {
+            if(Enemy.enemy[0].X < 1 && Enemy.enemy[2].X < 1
+                || Enemy.enemy[1].X >= maxXPos && Enemy.enemy[3].X >= maxXPos
+                || Enemy.enemy[0].Y < 1 && Enemy.enemy[1].Y < 1
+                || Enemy.enemy[2].Y >= maxYPos && Enemy.enemy[3].Y <= maxYPos)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
