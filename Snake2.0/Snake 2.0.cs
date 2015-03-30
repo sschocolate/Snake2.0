@@ -27,9 +27,6 @@ namespace Snake2._0
         private int runningTime;
         private int maxXPos;
         private int maxYPos;
-        private int dirMoved = -1;
-        private Random rngMove;
-        private Random afterCollisionMove;
 
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
@@ -140,7 +137,7 @@ namespace Snake2._0
         {
             Player.Move();
             CheckCollision();
-            menuScreen.Invalidate();
+            mainScreen.Refresh();
         }
 
         /// <summary>
@@ -206,8 +203,6 @@ namespace Snake2._0
                 //Detect collision with a Collectable
                 if (Player.Snake[0].X == Collectable.X && Player.Snake[0].Y == Collectable.Y)
                 {
-                    string type = Collectable.type.ToString();
-                    //EatPower(type);
                     new Collectable(maxXPos, maxYPos);
                 }
             }
@@ -216,19 +211,6 @@ namespace Snake2._0
                 MessageBox.Show("Array out of bounds Exception occured.");
             }
 
-        }
-
-        private bool CheckEnemyCollision()
-        {
-            if(Enemy.enemy[0].X < 1 && Enemy.enemy[2].X < 1
-                || Enemy.enemy[1].X >= maxXPos && Enemy.enemy[3].X >= maxXPos
-                || Enemy.enemy[0].Y < 1 && Enemy.enemy[1].Y < 1
-                || Enemy.enemy[2].Y >= maxYPos && Enemy.enemy[3].Y <= maxYPos)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -263,19 +245,6 @@ namespace Snake2._0
             Score.Text = Settings.Score.ToString();
 
             new Food(maxXPos, maxYPos);
-        }
-
-        private void EatPower(BonusType type)
-        {
-               switch(type)
-               {
-                   //case BonusType.Type:
-                     //  Score.Text = "BIG";
-                       //break;
-
-                   default:
-                       break;
-               }
         }
 
         /// <summary>

@@ -43,58 +43,12 @@ namespace Snake2._0
         }
 
         /// <summary>
-        /// Determines direction of enemy movement.
-        /// </summary>
-        public static int MoveDir()
-        {
-            Random rngMove = new Random();
-            return rngMove.Next(4);
-        }
-
-        /// <summary>
         /// Determines number of spaces to move enemy and moves enemy.
         /// </summary>
         /// <returns></returns>
         public static int Move(int direction, int amount)
-        {   
-            if(direction == Settings.LEFT)
-            {
-                Enemy.enemy[0].X -= amount;
-                Enemy.enemy[1].X -= amount;
-                Enemy.enemy[2].X -= amount;
-                Enemy.enemy[3].X -= amount;
-
-                return Settings.LEFT;
-            }
-            else if(direction == Settings.RIGHT)
-            {
-                Enemy.enemy[0].X++;
-                Enemy.enemy[1].X++;
-                Enemy.enemy[2].X++;
-                Enemy.enemy[3].X++;
-
-                return Settings.RIGHT;
-            }
-            else if(direction == Settings.UP)
-            {
-                Enemy.enemy[0].Y--;
-                Enemy.enemy[1].Y--;
-                Enemy.enemy[2].Y--;
-                Enemy.enemy[3].Y--;
-
-                return Settings.UP;
-            }
-            else if(direction == Settings.DOWN)
-            {
-                Enemy.enemy[0].Y++;
-                Enemy.enemy[1].Y++;
-                Enemy.enemy[2].Y++;
-                Enemy.enemy[3].Y++;
-
-                return Settings.DOWN;
-            }
-
-            return -1;
+        {
+            return 1;
         }
     }
 }
