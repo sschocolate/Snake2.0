@@ -25,7 +25,6 @@ namespace Snake2._0
             keyTable.Add(Keys.Left, false);
             keyTable.Add(Keys.Up, false);
             keyTable.Add(Keys.Down, false);
-            keyTable.Add(Keys.Enter, false);
             keyTable.Add(Keys.P, false);
         }
 

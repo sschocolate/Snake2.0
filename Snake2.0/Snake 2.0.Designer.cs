@@ -29,27 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.PlayScreen = new System.Windows.Forms.PictureBox();
             this.ScoreLabel = new System.Windows.Forms.Label();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.Time = new System.Windows.Forms.Label();
             this.Score = new System.Windows.Forms.Label();
             this.Pause = new System.Windows.Forms.Button();
             this.ActionTimer = new System.Windows.Forms.Timer(this.components);
-            this.labelGameOver = new System.Windows.Forms.Label();
             this.GameTime = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.PlayScreen)).BeginInit();
+            this.mainScreen = new Snake2._0.MenuScreenControl();
             this.SuspendLayout();
-            // 
-            // PlayScreen
-            // 
-            this.PlayScreen.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.PlayScreen.Location = new System.Drawing.Point(12, 43);
-            this.PlayScreen.Name = "PlayScreen";
-            this.PlayScreen.Size = new System.Drawing.Size(604, 385);
-            this.PlayScreen.TabIndex = 0;
-            this.PlayScreen.TabStop = false;
-            this.PlayScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayScreen_Paint);
             // 
             // ScoreLabel
             // 
@@ -106,38 +94,43 @@
             this.ActionTimer.Interval = 1000;
             this.ActionTimer.Tick += new System.EventHandler(this.UpdateScreen);
             // 
-            // labelGameOver
-            // 
-            this.labelGameOver.AutoSize = true;
-            this.labelGameOver.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.labelGameOver.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelGameOver.Location = new System.Drawing.Point(161, 158);
-            this.labelGameOver.Name = "labelGameOver";
-            this.labelGameOver.Size = new System.Drawing.Size(162, 31);
-            this.labelGameOver.TabIndex = 6;
-            this.labelGameOver.Text = "Game Over";
-            this.labelGameOver.Visible = false;
-            // 
             // GameTime
             // 
             this.GameTime.Interval = 1000;
             this.GameTime.Tick += new System.EventHandler(this.GameTime_Tick);
+            // 
+            // mainScreen
+            // 
+            this.mainScreen.GameOver = false;
+            this.mainScreen.highScores = null;
+            this.mainScreen.Location = new System.Drawing.Point(12, 43);
+            this.mainScreen.map1_Image = null;
+            this.mainScreen.map2_Image = null;
+            this.mainScreen.map3_Image = null;
+            this.mainScreen.Name = "mainScreen";
+            this.mainScreen.playerScore = 0;
+            this.mainScreen.Size = new System.Drawing.Size(604, 385);
+            this.mainScreen.TabIndex = 6;
+            this.mainScreen.exitClickEvent += new System.EventHandler(this.mainScreen_exitClickEvent);
+            this.mainScreen.map1ClickEvent += new System.EventHandler(this.mainScreen_map1ClickEvent);
+            this.mainScreen.map2ClickEvent += new System.EventHandler(this.mainScreen_map1ClickEvent);
+            this.mainScreen.map3ClickEvent += new System.EventHandler(this.mainScreen_map1ClickEvent);
+            this.mainScreen.playAgainClickEvent += new System.EventHandler(this.mainScreen_playAgainClickEvent);
+            this.mainScreen.playScreenPaint += new System.Windows.Forms.PaintEventHandler(this.PlayScreen_Paint);
             // 
             // SnakeGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 440);
-            this.Controls.Add(this.labelGameOver);
+            this.Controls.Add(this.mainScreen);
             this.Controls.Add(this.Pause);
             this.Controls.Add(this.Score);
             this.Controls.Add(this.Time);
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.ScoreLabel);
-            this.Controls.Add(this.PlayScreen);
             this.Name = "SnakeGame";
             this.Text = "Snake 2.0";
-            ((System.ComponentModel.ISupportInitialize)(this.PlayScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,9 +144,8 @@
         private System.Windows.Forms.Label Score;
         private System.Windows.Forms.Button Pause;
         private System.Windows.Forms.Timer ActionTimer;
-        private System.Windows.Forms.Label labelGameOver;
         private System.Windows.Forms.Timer GameTime;
-        internal System.Windows.Forms.PictureBox PlayScreen;
+        private MenuScreenControl mainScreen;
     }
 }
 
