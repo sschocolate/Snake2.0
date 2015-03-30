@@ -39,39 +39,47 @@ namespace Snake2._0
         {
             InitializeComponent();
 
+            mainScreen.highScores = Settings.high_scores;
             //Set everything to default state
             new Settings();
             //Set player control keys
             KeyPressedEvents.initializeKeys();
 
-            maxXPos = PlayScreen.Size.Width / Settings.Width;
-            maxYPos = PlayScreen.Size.Height / Settings.Height;
-            //Set game speed and start timer
+            //Set game field boundary
+            maxXPos = mainScreen.Size.Width / Settings.Width;
+            maxYPos = mainScreen.Size.Height / Settings.Height;
+            //Set game speed
             try
             {
                 ActionTimer.Interval = 1000 / Settings.Speed;
-                ActionTimer.Start();
-                GameTime.Start();
             }
             catch (DivideByZeroException e)
             {
                 MessageBox.Show(e.ToString());
             }
 
-            //Start new game
-            StartGame();
         }
 
         /// <summary>
-        /// Initializes a snake and some food for it to eat. Initializes the score.
+        /// Initializes a snake and some food for it to eat. Initializes the score and timers.
         /// </summary>
         private void StartGame()
         {
-            labelGameOver.Visible = false;
             //Set variables to default state
             new Settings();
             runningTime = 0;
             this.Time.Text = "00:00";
+            mainScreen.GameOver = false;
+
+            //Set default direction to Up
+            KeyPressedEvents.ChangeState(Keys.Left, false);
+            KeyPressedEvents.ChangeState(Keys.Right, false);
+            KeyPressedEvents.ChangeState(Keys.Up, true);
+            KeyPressedEvents.ChangeState(Keys.Down, false);
+
+            //Start timers
+            ActionTimer.Start();
+            GameTime.Start();
 
             //Create new player
             Player player = new Player();
@@ -89,7 +97,7 @@ namespace Snake2._0
 
         /// <summary>
         /// Key down press events. This is one of the ways i found to detect arrow key presses.
-        /// Using KetEvents, it will not allow me to detect awwor keys.
+        /// Using KeyEvents, it will not allow me to detect awwor keys.
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="keyData"></param>
@@ -114,9 +122,6 @@ namespace Snake2._0
                 case Keys.Down:
                     KeyPressedEvents.ChangeState(Keys.Down, true);
                     break;
-                case Keys.Enter:
-                    KeyPressedEvents.ChangeState(Keys.Enter, true);
-                    break;
                 case Keys.P:
                     KeyPressedEvents.ChangeState(Keys.P, true);
                     pauseGame();
@@ -133,71 +138,9 @@ namespace Snake2._0
         /// <param name="e"></param>
         private void UpdateScreen(object sender, EventArgs e)
         {
-            //Check for game over
-            if(Settings.GameOver)
-            {
-                //Check if Enter is pressed
-                if(KeyPressedEvents.KeyPressed(Keys.Enter))
-                {
-                    KeyPressedEvents.ChangeState(Keys.Enter, false);
-                    StartGame();
-                }
-            }
-            else
-            {
-                Player.Move();
-                CheckCollision();
-
-                rngMove = new Random();
-                int move = rngMove.Next(3);
-
-                if(!CheckEnemyCollision())
-                {
-                    if (Enemy.MoveDir() == Settings.LEFT)
-                    {
-                        dirMoved = Enemy.Move(Settings.LEFT, move); 
-                    }
-                    else
-                    if(Enemy.MoveDir() == Settings.RIGHT)
-                    {
-                        dirMoved = Enemy.Move(Settings.RIGHT, move);
-                    }
-                    else
-                    if(Enemy.MoveDir() == Settings.UP)
-                    {
-                        dirMoved = Enemy.Move(Settings.UP, move);
-                    }
-                    else
-                    if(Enemy.MoveDir() == Settings.DOWN)
-                    {
-                        dirMoved = Enemy.Move(Settings.DOWN, move);
-                    }
-                }
-                else
-                {
-                    if(dirMoved == Settings.LEFT)
-                    {
-                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
-                    }
-                    else
-                    if(dirMoved == Settings.RIGHT)
-                    {
-                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
-                    }
-                    else
-                    if(dirMoved == Settings.UP)
-                    {
-                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
-                    }
-                    else
-                    if(dirMoved == Settings.DOWN)
-                    {
-                        dirMoved = Enemy.Move(rngMove.Next(4), 5);
-                    }
-                }
-            }
-
-            PlayScreen.Invalidate();
+            Player.Move();
+            CheckCollision();
+            menuScreen.Invalidate();
         }
 
         /// <summary>
@@ -208,7 +151,7 @@ namespace Snake2._0
         /// <param name="e"></param>
         private void PlayScreen_Paint(object sender, PaintEventArgs e)
         {
-            if(Settings.GameOver != true)
+            if(mainScreen.GameOver != true)
             {
                 //Drawy player
                 Player.Draw(e);
@@ -219,13 +162,7 @@ namespace Snake2._0
                 //Draw collectable
                 Collectable.Draw(e);
             }
-            else
-            {
-                string gameOver = "Game Over \nYour final score is: " + Settings.Score + "\nPress Enter to play again.";
-                labelGameOver.Text = gameOver;
-                labelGameOver.Visible = true;
             }
-        }
 
         /// <summary>
         /// Moves the snake depending on which key is pressed.
@@ -300,7 +237,10 @@ namespace Snake2._0
         /// </summary>
         private void Die()
         {
-            Settings.GameOver = true;
+            mainScreen.GameOver = true;
+            Settings.high_scores.Add(Settings.Score.ToString() + " Points");
+            Settings.high_scores.Sort();
+            Settings.high_scores.Reverse();
             ActionTimer.Stop();
             GameTime.Stop();
         }
@@ -385,6 +325,21 @@ namespace Snake2._0
             {
                 this.Time.Text = time.ToString(@"hh\:mm\:ss");
             }
+        }
+
+        private void mainScreen_map1ClickEvent(object sender, EventArgs e)
+        {
+            StartGame();
+        }
+
+        private void mainScreen_playAgainClickEvent(object sender, EventArgs e)
+        {
+            StartGame();
+        }
+
+        private void mainScreen_exitClickEvent(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
