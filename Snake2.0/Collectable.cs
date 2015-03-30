@@ -9,10 +9,9 @@ namespace Snake2._0
 {
     class Collectable
     {
-        private static BonusType type;
+        public static BonusType type;
         public static int X { get; set; }
         public static int Y { get; set; }
-
         public Collectable(int maxXPos, int maxYPos)
         {
             //Generate a random collectable type
