@@ -30,7 +30,7 @@ namespace Snake2._0
             switch (type)
             {
                 case BonusType.PointsBig:
-                    collectableColour = Brushes.Gold;
+                    collectableColour = Brushes.GreenYellow;
                     break;
                 case BonusType.PointsMed:
                     collectableColour = Brushes.Yellow;
@@ -46,12 +46,6 @@ namespace Snake2._0
                     break;
                 case BonusType.Shrink:
                     collectableColour = Brushes.LightGreen;
-                    break;
-                case BonusType.Grow:
-                    collectableColour = Brushes.DarkRed;
-                    break;
-                case BonusType.SpeedUp:
-                    collectableColour = Brushes.GreenYellow;
                     break;
                 case BonusType.Slow:
                     collectableColour = Brushes.LightSkyBlue;
