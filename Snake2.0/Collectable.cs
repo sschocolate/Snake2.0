@@ -25,6 +25,11 @@ namespace Snake2._0
             Y = Settings.rand.Next(0, maxYPos);
         }
 
+        public Collectable(Color collected)
+        {
+            
+        }
+
         public static void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             Brush collectableColour = Brushes.Black;
@@ -66,9 +71,9 @@ namespace Snake2._0
                                   Settings.Width, Settings.Height));
         }
 
-        public void isEaten(int colour)
+        public BonusType isEaten(Color clr)
         {
-
+            
         }
     }
 }
