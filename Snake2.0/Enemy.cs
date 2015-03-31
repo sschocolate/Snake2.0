@@ -47,7 +47,7 @@ namespace Snake2._0
         /// Determines number of spaces to move enemy and moves enemy.
         /// </summary>
         /// <returns></returns>
-        public static void Move(Direction direction)
+        public static void Move()
         {
             try
             {

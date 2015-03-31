@@ -18,8 +18,6 @@ namespace Snake2._0
     ///                                  the paint method for the picturebox, player movement,
     ///                                  interaction between snake and game board, and the
     ///                                  pause functionality.
-    /// For our prototype, all these methods are in one class; however, as we progress we
-    /// will separate them into different classes if applicable.
     /// Some of this code was taken from an online author's tutorial on youtube (Michiel Wouters)
     /// </summary>
     public partial class SnakeGame : Form
@@ -80,7 +78,7 @@ namespace Snake2._0
             GameTime.Start();
 
             //Create new player
-            player = new Player();
+            player = new Player(maxXPos, maxYPos);
 
             //set score to 0
             Score.Text = Settings.Score.ToString();
@@ -136,9 +134,8 @@ namespace Snake2._0
         /// <param name="e"></param>
         private void UpdateScreen(object sender, EventArgs e)
         {
-            Player.Move();
+            player.Move();
             CheckCollision();
-            Enemy.Move(Direction.Left);
             mainScreen.Refresh();
         }
 
@@ -153,7 +150,7 @@ namespace Snake2._0
             if(mainScreen.GameOver != true)
             {
                 //Drawy player
-                Player.Draw(e);
+                player.Draw(e);
                 //Draw food
                 Food.Draw(e);
                 //Draw enemy
@@ -163,25 +160,27 @@ namespace Snake2._0
             }
         }
 
+
         /// <summary>
-        /// Moves the snake depending on which key is pressed.
+        /// Checks to see if the snake has collided with another object.
         /// Author: Michiel Wouters
         /// </summary>
-        private void CheckCollision()
+        public void CheckCollision()
         {
             try
             {
+                List<Circle> snake = player.getSnake();
                 //Detect collision with border
-                if (Player.Snake[0].X < 0 || Player.Snake[0].Y < 0
-                    || Player.Snake[0].X >= maxXPos || Player.Snake[0].Y >= maxYPos)
+                if (snake[0].X < 0 || snake[0].Y < 0
+                    || snake[0].X >= maxXPos || snake[0].Y >= maxYPos)
                 {
                     Die();
                 }
 
                 //Detect collision with body
-                for (int j = 1; j < Player.Snake.Count; j++)
+                for (int j = 1; j < snake.Count; j++)
                 {
-                    if (Player.Snake[0].X == Player.Snake[j].X && Player.Snake[0].Y == Player.Snake[j].Y)
+                    if (snake[0].X == snake[j].X && snake[0].Y == snake[j].Y)
                     {
                         Die();
                     }
@@ -190,20 +189,26 @@ namespace Snake2._0
                 //Detect collision with Enemy
                 for (int i = 0; i < Enemy.enemy.Count; i++)
                 {
-                    if (Player.Snake[0].X == Enemy.enemy[i].X && Player.Snake[0].Y == Enemy.enemy[i].Y)
+                    if (snake[0].X == Enemy.enemy[i].X && snake[0].Y == Enemy.enemy[i].Y)
                     {
                         Die();
                     }
                 }
 
                 //Detect collision with food piece
-                if (Player.Snake[0].X == Food.X && Player.Snake[0].Y == Food.Y)
+                if (snake[0].X == Food.X && snake[0].Y == Food.Y)
                 {
-                    EatFood();
+                    player.EatFood();
+
+                    new Food(maxXPos, maxYPos);
+
+                    //Update Score
+                    Settings.Score += Settings.Points;
+                    Score.Text = Settings.Score.ToString();
                 }
 
                 //Detect collision with a Collectable
-                if (Player.Snake[0].X == Collectable.X && Player.Snake[0].Y == Collectable.Y)
+                if (snake[0].X == Collectable.X && snake[0].Y == Collectable.Y)
                 {
                     new Collectable(maxXPos, maxYPos);
                 }
@@ -231,26 +236,6 @@ namespace Snake2._0
             //Stop all timers
             ActionTimer.Stop();
             GameTime.Stop();
-        }
-
-        /// <summary>
-        /// Called when snake collides with food.
-        /// Author: Michiel Wouters
-        /// </summary>
-        private void EatFood()
-        {
-            //Add another body piece
-            Circle body = new Circle();
-            body.X = Player.Snake[Player.Snake.Count - 1].X;
-            body.Y = Player.Snake[Player.Snake.Count - 1].Y;
-
-            Player.Snake.Add(body);
-
-            //Update Score
-            Settings.Score += Settings.Points;
-            Score.Text = Settings.Score.ToString();
-
-            new Food(maxXPos, maxYPos);
         }
 
         /// <summary>
