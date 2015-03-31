@@ -12,7 +12,7 @@ namespace Snake2._0
         public static BonusType type;
         public static int X { get; set; }
         public static int Y { get; set; }
-        public static int colour;
+        public static Color clr;
         public Collectable(int maxXPos, int maxYPos)
         {
             //Generate a random collectable type
@@ -28,36 +28,36 @@ namespace Snake2._0
         public static void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             Brush collectableColour = Brushes.Black;
-            colour = Settings.BLACK;
+            clr = Color.Black;
             switch (type)
             {
                 case BonusType.PointsBig:
                     collectableColour = Brushes.GreenYellow;
-                    colour = Settings.GREEN_YELLOW;
+                    clr = Color.GreenYellow;
                     break;
                 case BonusType.PointsMed:
                     collectableColour = Brushes.Yellow;
-                    colour = Settings.YELLOW;
+                    clr = Color.Yellow;
                     break;
                 case BonusType.PointsSm:
                     collectableColour = Brushes.LightYellow;
-                    colour = Settings.LIGHT_YELLOW;
+                    clr = Color.LightYellow;
                     break;
                 case BonusType.Retaliate:
                     collectableColour = Brushes.Blue;
-                    colour = Settings.BLUE;
+                    clr = Color.Blue;
                     break;
                 case BonusType.ScoreMultiplier:
                     collectableColour = Brushes.Magenta;
-                    colour = Settings.MAGENTA;
+                    clr = Color.Magenta;
                     break;
                 case BonusType.Shrink:
                     collectableColour = Brushes.LightGreen;
-                    colour = Settings.LIGHT_GREEN;
+                    clr = Color.LightGreen;
                     break;
                 case BonusType.Slow:
                     collectableColour = Brushes.LightSkyBlue;
-                    colour = Settings.LIGHT_SKY_BLUE;
+                    clr = Color.LightSkyBlue;
                     break;
             }
             e.Graphics.FillEllipse(collectableColour,
