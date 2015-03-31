@@ -10,14 +10,19 @@ namespace Snake2._0
 {
     class Player
     {
-        public static List<Circle> Snake = new List<Circle>();
-        public static Direction direction { get; set; }
+        private List<Circle> Snake = new List<Circle>();
+        private Direction direction { get; set; }
+        private int maxXpos;
+        private int maxYPos;
 
         /// <summary>
         /// Constructor to initialize a player object's properties.
         /// </summary>
-        public Player()
+        public Player(int maxX, int maxY)
         {
+            //Instantiate max positions
+            maxXpos = maxX;
+            maxYPos = maxY;
             //Create player head and body
             Snake.Clear();
             Circle head = new Circle(19, 19);
@@ -36,12 +41,12 @@ namespace Snake2._0
         /// Draws the snake onto the pictureBox
         /// </summary>
         /// <param name="e"></param>
-        public static void Draw(System.Windows.Forms.PaintEventArgs e)
+        public void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             // Set colour of snake
             Brush snakeColour;
             //Draw snake
-            for (int i = 0; i <= Player.Snake.Count - 1; i++)
+            for (int i = 0; i <= Snake.Count - 1; i++)
             {
                 if (i == 0)
                     snakeColour = Brushes.Black; //Head
@@ -50,8 +55,8 @@ namespace Snake2._0
 
                 //Draw the snake
                 e.Graphics.FillEllipse(snakeColour,
-                    new Rectangle(Player.Snake[i].X * Settings.Width,
-                                  Player.Snake[i].Y * Settings.Height,
+                    new Rectangle(Snake[i].X * Settings.Width,
+                                  Snake[i].Y * Settings.Height,
                                   Settings.Width, Settings.Height));
             }
         }
@@ -59,46 +64,46 @@ namespace Snake2._0
         /// <summary>
         /// Moves all pieces of the snake object.
         /// </summary>
-        public static void Move()
+        public void Move()
         {
             try
             {
 
-                if (KeyPressedEvents.KeyPressed(Keys.Right) && Player.direction != Direction.Left)
-                    Player.direction = Direction.Right;
-                else if (KeyPressedEvents.KeyPressed(Keys.Left) && Player.direction != Direction.Right)
-                    Player.direction = Direction.Left;
-                else if (KeyPressedEvents.KeyPressed(Keys.Up) && Player.direction != Direction.Down)
-                    Player.direction = Direction.Up;
-                else if (KeyPressedEvents.KeyPressed(Keys.Down) && Player.direction != Direction.Up)
-                    Player.direction = Direction.Down;
+                if (KeyPressedEvents.KeyPressed(Keys.Right) && direction != Direction.Left)
+                    direction = Direction.Right;
+                else if (KeyPressedEvents.KeyPressed(Keys.Left) && direction != Direction.Right)
+                    direction = Direction.Left;
+                else if (KeyPressedEvents.KeyPressed(Keys.Up) && direction != Direction.Down)
+                    direction = Direction.Up;
+                else if (KeyPressedEvents.KeyPressed(Keys.Down) && direction != Direction.Up)
+                    direction = Direction.Down;
 
-                for (int i = Player.Snake.Count - 1; i >= 0; i--)
+                for (int i = Snake.Count - 1; i >= 0; i--)
                 {
                     //Move head
                     if (i == 0)
                     {
-                        switch (Player.direction)
+                        switch (direction)
                         {
                             case Direction.Right:
-                                Player.Snake[0].X++;
+                                Snake[0].X++;
                                 break;
                             case Direction.Left:
-                                Player.Snake[0].X--;
+                                Snake[0].X--;
                                 break;
                             case Direction.Up:
-                                Player.Snake[0].Y--;
+                                Snake[0].Y--;
                                 break;
                             case Direction.Down:
-                                Player.Snake[0].Y++;
+                                Snake[0].Y++;
                                 break;
                         }
                     }
                     else
                     {
                         //Move body
-                        Player.Snake[i].X = Player.Snake[i - 1].X;
-                        Player.Snake[i].Y = Player.Snake[i - 1].Y;
+                        Snake[i].X = Snake[i - 1].X;
+                        Snake[i].Y = Snake[i - 1].Y;
                     }
                 }
             }
@@ -106,6 +111,25 @@ namespace Snake2._0
             {
                 MessageBox.Show("Array out of bounds Exception occured.");
             }
+        }
+
+        /// <summary>
+        /// Called when snake collides with food.
+        /// Author: Michiel Wouters
+        /// </summary>
+        public void EatFood()
+        {
+            //Add another body piece
+            Circle body = new Circle();
+            body.X = Snake[Snake.Count - 1].X;
+            body.Y = Snake[Snake.Count - 1].Y;
+
+            Snake.Add(body);
+        }
+
+        public List<Circle> getSnake()
+        {
+            return Snake;
         }
     }
 }

@@ -143,8 +143,8 @@
         private System.Windows.Forms.Label Time;
         private System.Windows.Forms.Label Score;
         private System.Windows.Forms.Button Pause;
-        private System.Windows.Forms.Timer ActionTimer;
-        private System.Windows.Forms.Timer GameTime;
+        internal System.Windows.Forms.Timer ActionTimer;
+        internal System.Windows.Forms.Timer GameTime;
         private MenuScreenControl mainScreen;
     }
 }
