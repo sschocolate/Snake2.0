@@ -12,6 +12,7 @@ namespace Snake2._0
         public static BonusType type;
         public static int X { get; set; }
         public static int Y { get; set; }
+        public static int colour;
         public Collectable(int maxXPos, int maxYPos)
         {
             //Generate a random collectable type
@@ -27,34 +28,47 @@ namespace Snake2._0
         public static void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             Brush collectableColour = Brushes.Black;
+            colour = Settings.BLACK;
             switch (type)
             {
                 case BonusType.PointsBig:
                     collectableColour = Brushes.GreenYellow;
+                    colour = Settings.GREEN_YELLOW;
                     break;
                 case BonusType.PointsMed:
                     collectableColour = Brushes.Yellow;
+                    colour = Settings.YELLOW;
                     break;
                 case BonusType.PointsSm:
                     collectableColour = Brushes.LightYellow;
+                    colour = Settings.LIGHT_YELLOW;
                     break;
                 case BonusType.Retaliate:
                     collectableColour = Brushes.Blue;
+                    colour = Settings.BLUE;
                     break;
                 case BonusType.ScoreMultiplier:
                     collectableColour = Brushes.Magenta;
+                    colour = Settings.MAGENTA;
                     break;
                 case BonusType.Shrink:
                     collectableColour = Brushes.LightGreen;
+                    colour = Settings.LIGHT_GREEN;
                     break;
                 case BonusType.Slow:
                     collectableColour = Brushes.LightSkyBlue;
+                    colour = Settings.LIGHT_SKY_BLUE;
                     break;
             }
             e.Graphics.FillEllipse(collectableColour,
                     new Rectangle(X * Settings.Width,
                                   Y * Settings.Height,
                                   Settings.Width, Settings.Height));
+        }
+
+        public void isEaten(int colour)
+        {
+
         }
     }
 }
