@@ -27,7 +27,8 @@ namespace Snake2._0
         private int runningTime;
         private int maxXPos;
         private int maxYPos;
-
+        Player player;
+        
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
         /// Author: Michiel Wouters
@@ -60,7 +61,7 @@ namespace Snake2._0
         /// <summary>
         /// Initializes a snake and some food for it to eat. Initializes the score and timers.
         /// </summary>
-        private void StartGame()
+        public void StartGame()
         {
             //Set variables to default state
             new Settings();
@@ -79,7 +80,7 @@ namespace Snake2._0
             GameTime.Start();
 
             //Create new player
-            Player player = new Player();
+            player = new Player();
 
             //set score to 0
             Score.Text = Settings.Score.ToString();
@@ -137,6 +138,7 @@ namespace Snake2._0
         {
             Player.Move();
             CheckCollision();
+            Enemy.Move(Direction.Left);
             mainScreen.Refresh();
         }
 
@@ -159,7 +161,7 @@ namespace Snake2._0
                 //Draw collectable
                 Collectable.Draw(e);
             }
-            }
+        }
 
         /// <summary>
         /// Moves the snake depending on which key is pressed.
@@ -220,9 +222,13 @@ namespace Snake2._0
         private void Die()
         {
             mainScreen.GameOver = true;
+
+            //Add a highs scores to the list
             Settings.high_scores.Add(Settings.Score.ToString() + " Points");
             Settings.high_scores.Sort();
             Settings.high_scores.Reverse();
+
+            //Stop all timers
             ActionTimer.Stop();
             GameTime.Stop();
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Snake2._0
 {
@@ -46,9 +47,19 @@ namespace Snake2._0
         /// Determines number of spaces to move enemy and moves enemy.
         /// </summary>
         /// <returns></returns>
-        public static int Move(int direction, int amount)
+        public static void Move(Direction direction)
         {
-            return 1;
+            try
+            {
+                for (int i = 0; i < Enemy.enemy.Count; i++)
+                {
+                    Enemy.enemy[i].X++;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Array out of bounds Exception occured.");
+            }
         }
     }
 }
