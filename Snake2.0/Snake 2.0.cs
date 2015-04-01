@@ -26,6 +26,7 @@ namespace Snake2._0
         private int maxXPos;
         private int maxYPos;
         Player player;
+        Enemy enemy;
         
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
@@ -86,7 +87,7 @@ namespace Snake2._0
             //Generate food object
             new Food(maxXPos, maxYPos);
             //Generate enemy object
-            new Enemy(maxXPos, maxYPos);
+            enemy = new Enemy(maxXPos, maxYPos);
             //Generate collectable object
             new Collectable(maxXPos, maxYPos);
         }
@@ -135,6 +136,7 @@ namespace Snake2._0
         private void UpdateScreen(object sender, EventArgs e)
         {
             player.Move();
+            enemy.Move(); 
             CheckCollision();
             mainScreen.Refresh();
         }
@@ -154,7 +156,7 @@ namespace Snake2._0
                 //Draw food
                 Food.Draw(e);
                 //Draw enemy
-                Enemy.Draw(e);
+                enemy.Draw(e);
                 //Draw collectable
                 Collectable.Draw(e);
             }
@@ -169,7 +171,10 @@ namespace Snake2._0
         {
             try
             {
+                //Get the bodies of player and enemy to check for collision
                 List<Circle> snake = player.getSnake();
+                List<Circle> enemyBody = enemy.getEnemy();
+
                 //Detect collision with border
                 if (snake[0].X < 0 || snake[0].Y < 0
                     || snake[0].X >= maxXPos || snake[0].Y >= maxYPos)
@@ -187,9 +192,9 @@ namespace Snake2._0
                 }
 
                 //Detect collision with Enemy
-                for (int i = 0; i < Enemy.enemy.Count; i++)
+                for (int i = 0; i < enemyBody.Count; i++)
                 {
-                    if (snake[0].X == Enemy.enemy[i].X && snake[0].Y == Enemy.enemy[i].Y)
+                    if (snake[0].X == enemyBody[i].X && snake[0].Y == enemyBody[i].Y)
                     {
                         Die();
                     }
@@ -227,6 +232,7 @@ namespace Snake2._0
         private void Die()
         {
             mainScreen.GameOver = true;
+            mainScreen.playerScore = Settings.Score;
 
             //Add a highs scores to the list
             Settings.high_scores.Add(Settings.Score.ToString() + " Points");

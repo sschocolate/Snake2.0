@@ -10,9 +10,6 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestSnakeEat()
         {
-            Player player = new Player();
-            int i = Player.snake.Count;
-            Assert.AreEqual(i, 3);
         }
     }
 }

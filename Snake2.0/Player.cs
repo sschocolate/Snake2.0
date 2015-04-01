@@ -12,6 +12,8 @@ namespace Snake2._0
     {
         private List<Circle> Snake = new List<Circle>();
         private Direction direction { get; set; }
+        private int startX = 19;
+        private int startY = 19;
         private int maxXpos;
         private int maxYPos;
 
@@ -25,7 +27,7 @@ namespace Snake2._0
             maxYPos = maxY;
             //Create player head and body
             Snake.Clear();
-            Circle head = new Circle(19, 19);
+            Circle head = new Circle(startX, startY);
             Circle body1 = new Circle(head.X, head.Y);
             Circle body2 = new Circle(body1.X, body1.Y);
             Circle body3 = new Circle(body2.X, body2.Y);
@@ -127,6 +129,7 @@ namespace Snake2._0
             Snake.Add(body);
         }
 
+        //Return the snake's body
         public List<Circle> getSnake()
         {
             return Snake;

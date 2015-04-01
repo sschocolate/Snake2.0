@@ -10,28 +10,37 @@ namespace Snake2._0
 {
     class Enemy
     {
-        public static List<Circle> enemy = new List<Circle>();
-        public static Direction direction { get; set; }
+        private List<Circle> enemy = new List<Circle>();
+        private int maxXPos;
+        private int maxYPos;
+        Point destination;
 
-        public Enemy(int maxXPos, int maxYPos)
+        public Enemy(int maxX, int maxY)
         {
+            //Initialization
+            maxXPos = maxX;
+            maxYPos = maxY;
+            destination = new Point(Settings.rand.Next(maxXPos), Settings.rand.Next(maxYPos));
+
+            //Create enemy body
             enemy.Clear();
             Circle body1 = new Circle(Settings.rand.Next(0, maxXPos), Settings.rand.Next(0, maxYPos));
             Circle body2 = new Circle(body1.X + 1, body1.Y);
             Circle body3 = new Circle(body1.X, body1.Y + 1);
             Circle body4 = new Circle(body1.X + 1, body1.Y + 1);
-
+            //Add body to the list
             enemy.Add(body1);
             enemy.Add(body2);
             enemy.Add(body3);
             enemy.Add(body4);
+
         }
 
         /// <summary>
         /// Draws the enemy onto the pictureBox
         /// </summary>
         /// <param name="e"></param>
-        public static void Draw(System.Windows.Forms.PaintEventArgs e)
+        public void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             for (int i = 0; i <= enemy.Count - 1; i++)
             {
@@ -47,19 +56,48 @@ namespace Snake2._0
         /// Determines number of spaces to move enemy and moves enemy.
         /// </summary>
         /// <returns></returns>
-        public static void Move()
+        public void Move()
         {
             try
             {
-                for (int i = 0; i < Enemy.enemy.Count; i++)
-                {
-                    Enemy.enemy[i].X++;
-                }
+                //Enemy will head towards destination
+                if (enemy[0].X < destination.X)
+                    for (int i = 0; i < enemy.Count; i++)
+                        enemy[i].X++;
+
+                if (enemy[0].Y < destination.Y)
+                    for (int i = 0; i < enemy.Count; i++)
+                        enemy[i].Y++;
+
+                if (enemy[0].X > destination.X)
+                    for (int i = 0; i < enemy.Count; i++)
+                        enemy[i].X--;
+
+                if (enemy[0].Y > destination.Y)
+                    for (int i = 0; i < enemy.Count; i++)
+                        enemy[i].Y--;
+
+                //Once destination is reached, generate a new destination
+                if (enemy[0].X == destination.X && enemy[0].Y == destination.Y)
+                    destination = newDestination();
             }
             catch (Exception e)
             {
                 MessageBox.Show("Array out of bounds Exception occured.");
             }
+        }
+
+        //Return the enemy's body
+        public List<Circle> getEnemy()
+        {
+            return enemy;
+        }
+        
+        //Find a new point for the enemy to head towards
+        public Point newDestination()
+        {
+            Point dest = new Point(Settings.rand.Next(maxXPos), Settings.rand.Next(maxYPos));
+            return dest;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Snake2._0
 
         public BonusType isEaten(Color clr)
         {
-            
+            return BonusType.PointsBig;
         }
     }
 }

@@ -114,7 +114,11 @@ namespace Snake2._0
         public int playerScore
         {
             get { return score_m; }
-            set { score_m = value; }
+            set 
+            { 
+                score_m = value;
+                endGame_score.Text = value.ToString();
+            }
         }
 
         //Method called by buttons to switch between screens.

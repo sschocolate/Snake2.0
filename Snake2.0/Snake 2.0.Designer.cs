@@ -108,7 +108,7 @@
             this.mainScreen.map2_Image = null;
             this.mainScreen.map3_Image = null;
             this.mainScreen.Name = "mainScreen";
-            this.mainScreen.playerScore = 0;
+            this.mainScreen.playerScore = 123;
             this.mainScreen.Size = new System.Drawing.Size(604, 385);
             this.mainScreen.TabIndex = 6;
             this.mainScreen.exitClickEvent += new System.EventHandler(this.mainScreen_exitClickEvent);
