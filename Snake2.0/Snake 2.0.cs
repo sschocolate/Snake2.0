@@ -89,7 +89,7 @@ namespace Snake2._0
             //Generate enemy object
             enemy = new Enemy(maxXPos, maxYPos);
             //Generate collectable object
-            new Collectable(maxXPos, maxYPos);
+            new Collectible(maxXPos, maxYPos);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Snake2._0
                 //Draw enemy
                 enemy.Draw(e);
                 //Draw collectable
-                Collectable.Draw(e);
+                Collectible.Draw(e);
             }
         }
 
@@ -213,9 +213,9 @@ namespace Snake2._0
                 }
 
                 //Detect collision with a Collectable
-                if (snake[0].X == Collectable.X && snake[0].Y == Collectable.Y)
+                if (snake[0].X == Collectible.X && snake[0].Y == Collectible.Y)
                 {
-                    new Collectable(maxXPos, maxYPos);
+                    new Collectible(maxXPos, maxYPos);
                 }
             }
             catch (Exception)
