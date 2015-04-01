@@ -7,13 +7,13 @@ using System.Drawing;
 
 namespace Snake2._0
 {
-    class Collectable
+    class Collectible
     {
         public static BonusType type;
         public static int X { get; set; }
         public static int Y { get; set; }
         public static Color clr;
-        public Collectable(int maxXPos, int maxYPos)
+        public Collectible(int maxXPos, int maxYPos)
         {
             //Generate a random collectable type
             Array values = Enum.GetValues(typeof(BonusType));
@@ -23,11 +23,6 @@ namespace Snake2._0
             //Set location to somwhere within the playing field
             X = Settings.rand.Next(0, maxXPos);
             Y = Settings.rand.Next(0, maxYPos);
-        }
-
-        public Collectable(Color collected)
-        {
-            
         }
 
         public static void Draw(System.Windows.Forms.PaintEventArgs e)
@@ -69,11 +64,6 @@ namespace Snake2._0
                     new Rectangle(X * Settings.Width,
                                   Y * Settings.Height,
                                   Settings.Width, Settings.Height));
-        }
-
-        public BonusType isEaten(Color clr)
-        {
-            
         }
     }
 }
