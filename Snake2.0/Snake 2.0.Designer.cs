@@ -104,17 +104,17 @@
             this.mainScreen.GameOver = false;
             this.mainScreen.highScores = null;
             this.mainScreen.Location = new System.Drawing.Point(12, 43);
-            this.mainScreen.map1_Image = null;
-            this.mainScreen.map2_Image = null;
-            this.mainScreen.map3_Image = null;
+            this.mainScreen.map1_Image = global::Snake2._0.Properties.Resources.map1;
+            this.mainScreen.map2_Image = global::Snake2._0.Properties.Resources.map0;
+            this.mainScreen.map3_Image = global::Snake2._0.Properties.Resources.map3;
             this.mainScreen.Name = "mainScreen";
             this.mainScreen.playerScore = 123;
             this.mainScreen.Size = new System.Drawing.Size(604, 385);
             this.mainScreen.TabIndex = 6;
             this.mainScreen.exitClickEvent += new System.EventHandler(this.mainScreen_exitClickEvent);
             this.mainScreen.map1ClickEvent += new System.EventHandler(this.mainScreen_map1ClickEvent);
-            this.mainScreen.map2ClickEvent += new System.EventHandler(this.mainScreen_map1ClickEvent);
-            this.mainScreen.map3ClickEvent += new System.EventHandler(this.mainScreen_map1ClickEvent);
+            this.mainScreen.map2ClickEvent += new System.EventHandler(this.mainScreen_map2ClickEvent);
+            this.mainScreen.map3ClickEvent += new System.EventHandler(this.mainScreen_map3ClickEvent);
             this.mainScreen.playAgainClickEvent += new System.EventHandler(this.mainScreen_playAgainClickEvent);
             this.mainScreen.playScreenPaint += new System.Windows.Forms.PaintEventHandler(this.PlayScreen_Paint);
             // 

@@ -167,6 +167,7 @@
             this.map3.Location = new System.Drawing.Point(409, 105);
             this.map3.Name = "map3";
             this.map3.Size = new System.Drawing.Size(172, 147);
+            this.map3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.map3.TabIndex = 3;
             this.map3.TabStop = false;
             this.map3.Click += new System.EventHandler(this.map3_Click);
@@ -176,6 +177,7 @@
             this.map2.Location = new System.Drawing.Point(219, 105);
             this.map2.Name = "map2";
             this.map2.Size = new System.Drawing.Size(172, 147);
+            this.map2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.map2.TabIndex = 2;
             this.map2.TabStop = false;
             this.map2.Click += new System.EventHandler(this.map2_Click);
@@ -185,6 +187,7 @@
             this.map1.Location = new System.Drawing.Point(32, 105);
             this.map1.Name = "map1";
             this.map1.Size = new System.Drawing.Size(172, 147);
+            this.map1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.map1.TabIndex = 1;
             this.map1.TabStop = false;
             this.map1.Click += new System.EventHandler(this.map1_Click);

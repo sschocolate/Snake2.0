@@ -12,7 +12,7 @@ namespace Snake2._0
 {
     public partial class MenuScreenControl : UserControl
     {
-        private List<string> high_scores_m;
+        private List<int> high_scores_m;
         private int score_m;
         private bool GameOver_m = false;
 
@@ -95,7 +95,7 @@ namespace Snake2._0
 
         [Description("Array used to populate high scores"),
          Category("Custom")]
-        public List<string> highScores
+        public List<int> highScores
         {
             get { return high_scores_m; }
             set { high_scores_m = value; }
@@ -129,26 +129,26 @@ namespace Snake2._0
         }
 
         //Method used to populate high scores page
-        private void populateHighScores(List<string> scores)
+        private void populateHighScores(List<int> scores)
         {
             for (int i = 0; i < scores.Count; i++)
             {
                 switch (i)
                 {
                     case 0:
-                        firstLabel.Text = scores[i];
+                        firstLabel.Text = scores[i] + " Points";
                         break;
                     case 1:
-                        secondLabel.Text = scores[i];
+                        secondLabel.Text = scores[i] + " Points";
                         break;
                     case 2:
-                        thirdLabel.Text = scores[i];
+                        thirdLabel.Text = scores[i] + " Points";
                         break;
                     case 3:
-                        fourthLabel.Text = scores[i];
+                        fourthLabel.Text = scores[i] + " Points";
                         break;
                     case 4:
-                        fifthLabel.Text = scores[i];
+                        fifthLabel.Text = scores[i] + " Points";
                         break;
                     default:
                         break;
