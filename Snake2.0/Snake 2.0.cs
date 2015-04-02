@@ -240,19 +240,22 @@ namespace Snake2._0
                     if(bonus == BonusType.PointsBig)
                     {
                         int numScore = Int32.Parse(Score.Text);
-                        Score.Text = (numScore + 100).ToString();
+                        Settings.Score = numScore + 100;
+                        Score.Text = Settings.Score.ToString();
                     }
 
                     if(bonus == BonusType.PointsMed)
                     {
                         int numScore = Int32.Parse(Score.Text);
-                        Score.Text = (numScore + 50).ToString();
+                        Settings.Score = numScore + 50;
+                        Score.Text = Settings.Score.ToString();
                     }
 
                     if (bonus == BonusType.PointsSm)
                     {
                         int numScore = Int32.Parse(Score.Text);
-                        Score.Text = (numScore + 20).ToString();
+                        Settings.Score = numScore + 20;
+                        Score.Text = Settings.Score.ToString();
                     }
 
                     if (bonus == BonusType.Retaliate)
@@ -313,6 +316,15 @@ namespace Snake2._0
             //Stop all timers
             ActionTimer.Stop();
             GameTime.Stop();
+
+            try
+            {
+                ActionTimer.Interval = 1500 / Settings.Speed;
+            }
+            catch (DivideByZeroException e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
 
         /// <summary>
