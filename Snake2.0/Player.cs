@@ -20,8 +20,10 @@ namespace Snake2._0
         /// <summary>
         /// Constructor to initialize a player object's properties.
         /// </summary>
-        public Player(int maxX, int maxY)
+        public Player(int maxX, int maxY, Collectible eat)
         {
+            eat.CollectibleEaten += PowerUp;
+
             //Instantiate max positions
             maxXpos = maxX;
             maxYPos = maxY;
@@ -39,6 +41,12 @@ namespace Snake2._0
 
             direction = Direction.Up;
         }
+
+        private void PowerUp()
+        {
+            
+        }
+
         /// <summary>
         /// Draws the snake onto the pictureBox
         /// </summary>
