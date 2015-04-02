@@ -45,15 +45,7 @@ namespace Snake2._0
             //Set game field boundary
             maxXPos = mainScreen.Size.Width / Settings.Width;
             maxYPos = mainScreen.Size.Height / Settings.Height;
-            //Set game speed
-            try
-            {
-                ActionTimer.Interval = 1000 / Settings.Speed;
-            }
-            catch (DivideByZeroException e)
-            {
-                MessageBox.Show(e.ToString());
-            }
+            
 
         }
 
@@ -74,6 +66,15 @@ namespace Snake2._0
             KeyPressedEvents.ChangeState(Keys.Up, true);
             KeyPressedEvents.ChangeState(Keys.Down, false);
 
+            //Set game speed
+            try
+            {
+                ActionTimer.Interval = 1000 / Settings.Speed;
+            }
+            catch (DivideByZeroException e)
+            {
+                MessageBox.Show(e.ToString());
+            }
             //Start timers
             ActionTimer.Start();
             GameTime.Start();
