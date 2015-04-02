@@ -27,6 +27,7 @@ namespace Snake2._0
         private int maxYPos;
         Player player;
         Enemy enemy;
+        Collectible collect;
         
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
@@ -78,8 +79,10 @@ namespace Snake2._0
             ActionTimer.Start();
             GameTime.Start();
 
+            collect = new Collectible(maxXPos, maxYPos);
+
             //Create new player
-            player = new Player(maxXPos, maxYPos);
+            player = new Player(maxXPos, maxYPos, collect);
 
             //set score to 0
             Score.Text = Settings.Score.ToString();
@@ -89,7 +92,9 @@ namespace Snake2._0
             //Generate enemy object
             enemy = new Enemy(maxXPos, maxYPos);
             //Generate collectable object
-            new Collectible(maxXPos, maxYPos);
+            //new Collectible(maxXPos, maxYPos);
+
+
         }
 
         /// <summary>
@@ -215,6 +220,44 @@ namespace Snake2._0
                 //Detect collision with a Collectable
                 if (snake[0].X == Collectible.X && snake[0].Y == Collectible.Y)
                 {
+                    BonusType bonus;
+                    bonus = collect.EatingCollectible();
+
+                    if(bonus == BonusType.PointsBig)
+                    {
+                        MessageBox.Show("PointsBig");
+                    }
+
+                    if(bonus == BonusType.PointsMed)
+                    {
+                        MessageBox.Show("PointsMed");
+                    }
+
+                    if (bonus == BonusType.PointsSm)
+                    {
+                        MessageBox.Show("PointsSm");
+                    }
+
+                    if (bonus == BonusType.Retaliate)
+                    {
+                        MessageBox.Show("Retaliate");
+                    }
+
+                    if (bonus == BonusType.ScoreMultiplier)
+                    {
+                        MessageBox.Show("ScoreMultiplier");
+                    }
+
+                    if (bonus == BonusType.Shrink)
+                    {
+                        MessageBox.Show("Shrink");
+                    }
+
+                    if (bonus == BonusType.Slow)
+                    {
+                        MessageBox.Show("Slow");
+                    }
+                
                     new Collectible(maxXPos, maxYPos);
                 }
             }

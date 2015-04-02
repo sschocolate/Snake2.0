@@ -7,12 +7,13 @@ using System.Drawing;
 
 namespace Snake2._0
 {
-    class Collectible
+    public class Collectible
     {
+        public Action CollectibleEaten;
         public static BonusType type;
         public static int X { get; set; }
         public static int Y { get; set; }
-        public static Color clr;
+        public static Color clr = Color.Black;
         public Collectible(int maxXPos, int maxYPos)
         {
             //Generate a random collectable type
@@ -25,10 +26,46 @@ namespace Snake2._0
             Y = Settings.rand.Next(0, maxYPos);
         }
 
+        public BonusType EatingCollectible()
+        {
+            CollectibleEaten();
+            if(clr == Color.GreenYellow)
+            {
+                return BonusType.PointsBig;
+            }
+
+            if(clr == Color.Yellow)
+            {
+                return BonusType.PointsMed;
+            }
+
+            if(clr == Color.LightYellow)
+            {
+                return BonusType.PointsSm;
+            }
+
+            if(clr == Color.Blue)
+            {
+                return BonusType.Retaliate;
+            }
+
+            if(clr == Color.Magenta)
+            {
+                return BonusType.ScoreMultiplier;
+            }
+
+            if(clr == Color.LightGreen)
+            {
+                return BonusType.Shrink;
+            }
+
+            return BonusType.Slow;
+        }
+
+
         public static void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             Brush collectableColour = Brushes.Black;
-            clr = Color.Black;
             switch (type)
             {
                 case BonusType.PointsBig:
