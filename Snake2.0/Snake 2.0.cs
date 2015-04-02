@@ -225,17 +225,20 @@ namespace Snake2._0
 
                     if(bonus == BonusType.PointsBig)
                     {
-                        MessageBox.Show("PointsBig");
+                        int numScore = Int32.Parse(Score.Text);
+                        Score.Text = (numScore + 100).ToString();
                     }
 
                     if(bonus == BonusType.PointsMed)
                     {
-                        MessageBox.Show("PointsMed");
+                        int numScore = Int32.Parse(Score.Text);
+                        Score.Text = (numScore + 50).ToString();
                     }
 
                     if (bonus == BonusType.PointsSm)
                     {
-                        MessageBox.Show("PointsSm");
+                        int numScore = Int32.Parse(Score.Text);
+                        Score.Text = (numScore + 20).ToString();
                     }
 
                     if (bonus == BonusType.Retaliate)
@@ -245,17 +248,28 @@ namespace Snake2._0
 
                     if (bonus == BonusType.ScoreMultiplier)
                     {
-                        MessageBox.Show("ScoreMultiplier");
+                        int numScore = Int32.Parse(Score.Text);
+                        Score.Text = (numScore * 2).ToString();
                     }
 
                     if (bonus == BonusType.Shrink)
                     {
-                        MessageBox.Show("Shrink");
+                        if(player.getSnake().Count() > 4)
+                        {
+                            player.Shrink();
+                        }
                     }
 
                     if (bonus == BonusType.Slow)
                     {
-                        MessageBox.Show("Slow");
+                        try
+                        {
+                            ActionTimer.Interval = 1500 / Settings.Speed;
+                        }
+                        catch (DivideByZeroException e)
+                        {
+                            MessageBox.Show(e.ToString());
+                        }
                     }
                 
                     new Collectible(maxXPos, maxYPos);

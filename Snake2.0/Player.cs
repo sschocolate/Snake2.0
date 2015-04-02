@@ -47,6 +47,11 @@ namespace Snake2._0
             
         }
 
+        public void Shrink()
+        {
+            Snake.RemoveAt(Snake.Count - 1);
+        }
+
         /// <summary>
         /// Draws the snake onto the pictureBox
         /// </summary>
