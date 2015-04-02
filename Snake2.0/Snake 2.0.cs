@@ -28,6 +28,7 @@ namespace Snake2._0
         Player player;
         Enemy enemy;
         Collectible collect;
+        Maps mapFactory;
         
         /// <summary>
         /// Constructor: Sets game to default state and initializes game timers. 
@@ -46,8 +47,9 @@ namespace Snake2._0
             //Set game field boundary
             maxXPos = mainScreen.Size.Width / Settings.Width;
             maxYPos = mainScreen.Size.Height / Settings.Height;
-            
 
+            //Create a new maps object to use when selecting a map
+            mapFactory = new Maps(0);
         }
 
         /// <summary>
@@ -157,6 +159,7 @@ namespace Snake2._0
         {
             if(mainScreen.GameOver != true)
             {
+                mapFactory.drawMap(e);
                 //Drawy player
                 player.Draw(e);
                 //Draw food
@@ -180,12 +183,22 @@ namespace Snake2._0
                 //Get the bodies of player and enemy to check for collision
                 List<Circle> snake = player.getSnake();
                 List<Circle> enemyBody = enemy.getEnemy();
+                List<Circle> mapWalls = mapFactory.getMap();
 
                 //Detect collision with border
                 if (snake[0].X < 0 || snake[0].Y < 0
                     || snake[0].X >= maxXPos || snake[0].Y >= maxYPos)
                 {
                     Die();
+                }
+
+                //Detect collision with map
+                for (int k = 0; k < mapWalls.Count; k++)
+                {
+                    if (snake[0].X == mapWalls[k].X && snake[0].Y == mapWalls[k].Y)
+                    {
+                        Die();
+                    }
                 }
 
                 //Detect collision with body
@@ -339,6 +352,19 @@ namespace Snake2._0
 
         private void mainScreen_map1ClickEvent(object sender, EventArgs e)
         {
+            mapFactory = new Maps(1);
+            StartGame();
+        }
+
+        private void mainScreen_map2ClickEvent(object sender, EventArgs e)
+        {
+            mapFactory = new Maps(0);
+            StartGame();
+        }
+
+        private void mainScreen_map3ClickEvent(object sender, EventArgs e)
+        {
+            mapFactory = new Maps(2);
             StartGame();
         }
 

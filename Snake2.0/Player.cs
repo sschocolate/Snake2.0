@@ -12,8 +12,8 @@ namespace Snake2._0
     {
         private List<Circle> Snake = new List<Circle>();
         private Direction direction { get; set; }
-        private int startX = 19;
-        private int startY = 19;
+        private int startX = 18;
+        private int startY = 18;
         private int maxXpos;
         private int maxYPos;
 

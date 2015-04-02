@@ -49,6 +49,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="KeyPressedEvents.cs" />
+    <Compile Include="Maps.cs" />
     <Compile Include="MenuScreenControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -79,8 +80,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +94,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map0.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map1.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map3.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

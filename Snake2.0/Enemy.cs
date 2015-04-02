@@ -44,7 +44,7 @@ namespace Snake2._0
         {
             for (int i = 0; i <= enemy.Count - 1; i++)
             {
-                //Draw the snake
+                //Draw the enemy
                 e.Graphics.FillEllipse(Brushes.Purple,
                     new Rectangle(enemy[i].X * Settings.Width,
                                   enemy[i].Y * Settings.Height,
