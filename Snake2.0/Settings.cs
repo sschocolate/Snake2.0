@@ -35,7 +35,7 @@ namespace Snake2._0
         public static int Points { get; set; }
         public static bool GameOver { get; set; }
         public static bool Paused { get; set; }
-        public static List<string> high_scores = new List<string>();
+        public static List<int> high_scores = new List<int>();
         public static Random rand = new Random();
 
         public const int LEFT = 0;

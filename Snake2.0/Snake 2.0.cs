@@ -292,7 +292,7 @@ namespace Snake2._0
             mainScreen.playerScore = Settings.Score;
 
             //Add a highs scores to the list
-            Settings.high_scores.Add(Settings.Score.ToString() + " Points");
+            Settings.high_scores.Add(Settings.Score);
             Settings.high_scores.Sort();
             Settings.high_scores.Reverse();
 
