@@ -61,29 +61,32 @@ namespace Snake2._0
             try
             {
                 //Enemy will head towards destination
-                if (enemy[0].X < destination.X)
-                    for (int i = 0; i < enemy.Count; i++)
-                        enemy[i].X++;
+                if (enemy.Any())
+                {
+                    if (enemy[0].X < destination.X)
+                        for (int i = 0; i < enemy.Count; i++)
+                            enemy[i].X++;
 
-                if (enemy[0].Y < destination.Y)
-                    for (int i = 0; i < enemy.Count; i++)
-                        enemy[i].Y++;
+                    if (enemy[0].Y < destination.Y)
+                        for (int i = 0; i < enemy.Count; i++)
+                            enemy[i].Y++;
 
-                if (enemy[0].X > destination.X)
-                    for (int i = 0; i < enemy.Count; i++)
-                        enemy[i].X--;
+                    if (enemy[0].X > destination.X)
+                        for (int i = 0; i < enemy.Count; i++)
+                            enemy[i].X--;
 
-                if (enemy[0].Y > destination.Y)
-                    for (int i = 0; i < enemy.Count; i++)
-                        enemy[i].Y--;
+                    if (enemy[0].Y > destination.Y)
+                        for (int i = 0; i < enemy.Count; i++)
+                            enemy[i].Y--;
 
-                //Once destination is reached, generate a new destination
-                if (enemy[0].X == destination.X && enemy[0].Y == destination.Y)
-                    destination = newDestination();
+                    //Once destination is reached, generate a new destination
+                    if (enemy[0].X == destination.X && enemy[0].Y == destination.Y)
+                        destination = newDestination();
+                }
             }
             catch (Exception e)
             {
-                MessageBox.Show("Array out of bounds Exception occured.");
+                MessageBox.Show(e.ToString());
             }
         }
 
@@ -98,6 +101,12 @@ namespace Snake2._0
         {
             Point dest = new Point(Settings.rand.Next(maxXPos), Settings.rand.Next(maxYPos));
             return dest;
+        }
+
+        //Removes all body pieces of the enemy
+        public void die()
+        {
+            enemy.Clear();
         }
     }
 }

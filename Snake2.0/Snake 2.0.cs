@@ -25,6 +25,7 @@ namespace Snake2._0
         private int runningTime;
         private int maxXPos;
         private int maxYPos;
+        private bool retaliate;
         Player player;
         Enemy enemy;
         Collectible collect;
@@ -62,6 +63,7 @@ namespace Snake2._0
             runningTime = 0;
             this.Time.Text = "00:00";
             mainScreen.GameOver = false;
+            retaliate = false;
 
             //Set default direction to Up
             KeyPressedEvents.ChangeState(Keys.Left, false);
@@ -82,7 +84,6 @@ namespace Snake2._0
             ActionTimer.Start();
             GameTime.Start();
 
-            collect = new Collectible(maxXPos, maxYPos);
 
             //Create new player
             player = new Player(maxXPos, maxYPos, collect);
@@ -95,9 +96,7 @@ namespace Snake2._0
             //Generate enemy object
             enemy = new Enemy(maxXPos, maxYPos);
             //Generate collectable object
-            //new Collectible(maxXPos, maxYPos);
-
-
+            collect = new Collectible(maxXPos, maxYPos);
         }
 
         /// <summary>
@@ -215,7 +214,10 @@ namespace Snake2._0
                 {
                     if (snake[0].X == enemyBody[i].X && snake[0].Y == enemyBody[i].Y)
                     {
-                        Die();
+                        if (retaliate == true)
+                            enemy.die();
+                        else
+                            Die();
                     }
                 }
 
@@ -261,7 +263,7 @@ namespace Snake2._0
 
                     if (bonus == BonusType.Retaliate)
                     {
-                        MessageBox.Show("Retaliate");
+                        retaliate = true;
                     }
 
                     if (bonus == BonusType.ScoreMultiplier)
@@ -293,9 +295,9 @@ namespace Snake2._0
                     new Collectible(maxXPos, maxYPos);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("Array out of bounds Exception occured.");
+                MessageBox.Show(e.ToString());
             }
 
         }

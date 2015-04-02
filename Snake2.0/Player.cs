@@ -23,7 +23,7 @@ namespace Snake2._0
         public Player(int maxX, int maxY, Collectible eat)
         {
             // subscribe the player to the collectible
-            eat.CollectibleEaten += PowerUp;
+            //eat.CollectibleEaten += PowerUp;
 
             //Instantiate max positions
             maxXpos = maxX;
@@ -131,7 +131,7 @@ namespace Snake2._0
             }
             catch (Exception)
             {
-                MessageBox.Show("Array out of bounds Exception occured.");
+                //MessageBox.Show("Array out of bounds Exception occured.");
             }
         }
 

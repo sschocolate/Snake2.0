@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,7 @@ namespace Snake2._0
 {
     public class Collectible
     {
-        public Action CollectibleEaten;
+        //public Action CollectibleEaten;
         public static BonusType type;
         public static int X { get; set; }
         public static int Y { get; set; }
@@ -32,7 +32,7 @@ namespace Snake2._0
         /// <returns></returns>
         public BonusType EatingCollectible()
         {
-            CollectibleEaten();
+            //CollectibleEaten();
             if(clr == Color.GreenYellow)
             {
                 return BonusType.PointsBig;
