@@ -123,12 +123,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 440);
+            this.ControlBox = false;
             this.Controls.Add(this.mainScreen);
             this.Controls.Add(this.Pause);
             this.Controls.Add(this.Score);
             this.Controls.Add(this.Time);
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.ScoreLabel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SnakeGame";
             this.Text = "Snake 2.0";
             this.ResumeLayout(false);
