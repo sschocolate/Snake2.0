@@ -26,6 +26,10 @@ namespace Snake2._0
             Y = Settings.rand.Next(0, maxYPos);
         }
 
+        /// <summary>
+        /// Based on the color of the collectible, it sends the bonus type to the player
+        /// </summary>
+        /// <returns></returns>
         public BonusType EatingCollectible()
         {
             CollectibleEaten();
@@ -62,7 +66,10 @@ namespace Snake2._0
             return BonusType.Slow;
         }
 
-
+        /// <summary>
+        /// Draws a random collectible on the map
+        /// </summary>
+        /// <param name="e"></param>
         public static void Draw(System.Windows.Forms.PaintEventArgs e)
         {
             Brush collectableColour = Brushes.Black;

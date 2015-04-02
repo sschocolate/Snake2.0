@@ -231,10 +231,11 @@ namespace Snake2._0
                     Score.Text = Settings.Score.ToString();
                 }
 
-                //Detect collision with a Collectable
+                //Detect collision with a Collectable, give corresponding attribute
                 if (snake[0].X == Collectible.X && snake[0].Y == Collectible.Y)
                 {
                     BonusType bonus;
+                    // notifies the collectible that it has been eaten by the snake
                     bonus = collect.EatingCollectible();
 
                     if(bonus == BonusType.PointsBig)

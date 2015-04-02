@@ -22,6 +22,7 @@ namespace Snake2._0
         /// </summary>
         public Player(int maxX, int maxY, Collectible eat)
         {
+            // subscribe the player to the collectible
             eat.CollectibleEaten += PowerUp;
 
             //Instantiate max positions
@@ -42,11 +43,17 @@ namespace Snake2._0
             direction = Direction.Up;
         }
 
+        /// <summary>
+        /// When the snake eats, it gets a bonus
+        /// </summary>
         private void PowerUp()
         {
             
         }
 
+        /// <summary>
+        /// When the snake eats a shrink bonus, it loses it's last circle
+        /// </summary>
         public void Shrink()
         {
             Snake.RemoveAt(Snake.Count - 1);
