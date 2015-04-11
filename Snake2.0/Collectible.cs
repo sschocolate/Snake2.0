@@ -33,17 +33,17 @@ namespace Snake2._0
         public BonusType EatingCollectible()
         {
             //CollectibleEaten();
-            if(clr == Color.GreenYellow)
+            if(clr == Color.Goldenrod)
             {
                 return BonusType.PointsBig;
             }
 
-            if(clr == Color.Yellow)
+            if(clr == Color.Gold)
             {
                 return BonusType.PointsMed;
             }
 
-            if(clr == Color.LightYellow)
+            if(clr == Color.Yellow)
             {
                 return BonusType.PointsSm;
             }
@@ -76,16 +76,16 @@ namespace Snake2._0
             switch (type)
             {
                 case BonusType.PointsBig:
-                    collectableColour = Brushes.GreenYellow;
-                    clr = Color.GreenYellow;
+                    collectableColour = Brushes.Goldenrod;
+                    clr = Color.Goldenrod;
                     break;
                 case BonusType.PointsMed:
-                    collectableColour = Brushes.Yellow;
-                    clr = Color.Yellow;
+                    collectableColour = Brushes.Gold;
+                    clr = Color.Gold;
                     break;
                 case BonusType.PointsSm:
-                    collectableColour = Brushes.LightYellow;
-                    clr = Color.LightYellow;
+                    collectableColour = Brushes.Yellow;
+                    clr = Color.Yellow;
                     break;
                 case BonusType.Retaliate:
                     collectableColour = Brushes.Blue;

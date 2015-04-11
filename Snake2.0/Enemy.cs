@@ -13,7 +13,8 @@ namespace Snake2._0
         private List<Circle> enemy = new List<Circle>();
         private int maxXPos;
         private int maxYPos;
-        Point destination;
+        private Point destination;
+        Size s = new Size(16,16);
 
         public Enemy(int maxX, int maxY)
         {
@@ -80,8 +81,9 @@ namespace Snake2._0
                             enemy[i].Y--;
 
                     //Once destination is reached, generate a new destination
-                    if (enemy[0].X == destination.X && enemy[0].Y == destination.Y)
-                        destination = newDestination();
+                    for (int i = 0; i < enemy.Count; i++)
+                        if (enemy[i].X == destination.X && enemy[i].Y == destination.Y)
+                            newDestination();
                 }
             }
             catch (Exception e)
@@ -97,10 +99,10 @@ namespace Snake2._0
         }
         
         //Find a new point for the enemy to head towards
-        public Point newDestination()
+        public void newDestination()
         {
             Point dest = new Point(Settings.rand.Next(maxXPos), Settings.rand.Next(maxYPos));
-            return dest;
+            destination = dest;
         }
 
         //Removes all body pieces of the enemy

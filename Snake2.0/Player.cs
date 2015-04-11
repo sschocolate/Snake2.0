@@ -16,6 +16,7 @@ namespace Snake2._0
         private int startY = 18;
         private int maxXpos;
         private int maxYPos;
+        public Brush snakeColour;
 
         /// <summary>
         /// Constructor to initialize a player object's properties.
@@ -65,13 +66,14 @@ namespace Snake2._0
         /// <param name="e"></param>
         public void Draw(System.Windows.Forms.PaintEventArgs e)
         {
-            // Set colour of snake
-            Brush snakeColour;
             //Draw snake
             for (int i = 0; i <= Snake.Count - 1; i++)
             {
                 if (i == 0)
-                    snakeColour = Brushes.Black; //Head
+                    if(Settings.retaliate) //Head
+                        snakeColour = Brushes.DarkRed;
+                    else
+                        snakeColour = Brushes.Black;
                 else
                     snakeColour = Brushes.Green; //Body
 

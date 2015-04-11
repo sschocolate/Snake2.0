@@ -36,6 +36,8 @@
             this.Pause = new System.Windows.Forms.Button();
             this.ActionTimer = new System.Windows.Forms.Timer(this.components);
             this.GameTime = new System.Windows.Forms.Timer(this.components);
+            this.collectable_timer = new System.Windows.Forms.Timer(this.components);
+            this.AI_respawn = new System.Windows.Forms.Timer(this.components);
             this.mainScreen = new Snake2._0.MenuScreenControl();
             this.SuspendLayout();
             // 
@@ -99,6 +101,16 @@
             this.GameTime.Interval = 1000;
             this.GameTime.Tick += new System.EventHandler(this.GameTime_Tick);
             // 
+            // collectable_timer
+            // 
+            this.collectable_timer.Interval = 23000;
+            this.collectable_timer.Tick += new System.EventHandler(this.respawn_timer_Tick);
+            // 
+            // AI_respawn
+            // 
+            this.AI_respawn.Interval = 10800;
+            this.AI_respawn.Tick += new System.EventHandler(this.AI_respawn_Tick);
+            // 
             // mainScreen
             // 
             this.mainScreen.GameOver = false;
@@ -122,6 +134,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(628, 440);
             this.ControlBox = false;
             this.Controls.Add(this.mainScreen);
@@ -131,7 +144,9 @@
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.ScoreLabel);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(644, 478);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(644, 478);
             this.Name = "SnakeGame";
             this.Text = "Snake 2.0";
             this.ResumeLayout(false);
@@ -149,6 +164,8 @@
         internal System.Windows.Forms.Timer ActionTimer;
         internal System.Windows.Forms.Timer GameTime;
         private MenuScreenControl mainScreen;
+        private System.Windows.Forms.Timer collectable_timer;
+        private System.Windows.Forms.Timer AI_respawn;
     }
 }
 

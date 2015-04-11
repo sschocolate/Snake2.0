@@ -37,6 +37,7 @@ namespace Snake2._0
         public static bool Paused { get; set; }
         public static List<int> high_scores = new List<int>();
         public static Random rand = new Random();
+        public static bool retaliate = false;
 
         public const int LEFT = 0;
         public const int RIGHT = 1;

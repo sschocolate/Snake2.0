@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Snake2._0
@@ -25,7 +25,6 @@ namespace Snake2._0
         private int runningTime;
         private int maxXPos;
         private int maxYPos;
-        private bool retaliate;
         Player player;
         Enemy enemy;
         Collectible collect;
@@ -51,6 +50,7 @@ namespace Snake2._0
 
             //Create a new maps object to use when selecting a map
             mapFactory = new Maps(0);
+
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Snake2._0
             runningTime = 0;
             this.Time.Text = "00:00";
             mainScreen.GameOver = false;
-            retaliate = false;
+            Settings.retaliate = false;
 
             //Set default direction to Up
             KeyPressedEvents.ChangeState(Keys.Left, false);
@@ -159,7 +159,7 @@ namespace Snake2._0
             if(mainScreen.GameOver != true)
             {
                 mapFactory.drawMap(e);
-                //Drawy player
+                //Draw player
                 player.Draw(e);
                 //Draw food
                 Food.Draw(e);
@@ -200,6 +200,21 @@ namespace Snake2._0
                     }
                 }
 
+                //Dectect enemy collision with walls
+                for (int kk = 0; kk < mapWalls.Count; kk++)
+                {
+                    for (int jj = 0; jj < enemyBody.Count; jj++) { 
+                        //Check if enemy collides with a wall piece
+                        if (enemyBody[jj].X == mapWalls[kk].X && enemyBody[jj].Y == mapWalls[kk].Y)
+                        {
+                            enemy.newDestination();
+                            enemy.Move();
+                            CheckCollision();
+                            break;
+                        }
+                    }
+                }
+
                 //Detect collision with body
                 for (int j = 1; j < snake.Count; j++)
                 {
@@ -214,10 +229,20 @@ namespace Snake2._0
                 {
                     if (snake[0].X == enemyBody[i].X && snake[0].Y == enemyBody[i].Y)
                     {
-                        if (retaliate == true)
+                        if (Settings.retaliate == true)
+                        {
                             enemy.die();
+                            //Increase score by 100 points
+                            int numScore = Int32.Parse(Score.Text);
+                            Settings.Score = numScore + 200;
+                            Score.Text = Settings.Score.ToString();
+                            //start timer
+                            AI_respawn.Start();
+                        }
                         else
+                        {
                             Die();
+                        }
                     }
                 }
 
@@ -226,11 +251,26 @@ namespace Snake2._0
                 {
                     player.EatFood();
 
+                    //Generate new food
                     new Food(maxXPos, maxYPos);
 
                     //Update Score
                     Settings.Score += Settings.Points;
                     Score.Text = Settings.Score.ToString();
+                }
+
+                //Detect food collision with wall
+                for (int i = 0; i < mapWalls.Count; i++)
+                {
+                    if (Food.X == mapWalls[i].X && Food.Y == mapWalls[i].Y)
+                        new Food(maxXPos, maxYPos);
+                }
+
+                //Detect collectable collision with wall
+                for (int i = 0; i < mapWalls.Count; i++)
+                {
+                    if (Collectible.X == mapWalls[i].X && Collectible.Y == mapWalls[i].Y)
+                        new Collectible(maxXPos, maxYPos);
                 }
 
                 //Detect collision with a Collectable, give corresponding attribute
@@ -242,6 +282,7 @@ namespace Snake2._0
 
                     if(bonus == BonusType.PointsBig)
                     {
+                        //Increase score by 100 points
                         int numScore = Int32.Parse(Score.Text);
                         Settings.Score = numScore + 100;
                         Score.Text = Settings.Score.ToString();
@@ -249,6 +290,7 @@ namespace Snake2._0
 
                     if(bonus == BonusType.PointsMed)
                     {
+                        //Increase score by 50 points
                         int numScore = Int32.Parse(Score.Text);
                         Settings.Score = numScore + 50;
                         Score.Text = Settings.Score.ToString();
@@ -256,6 +298,7 @@ namespace Snake2._0
 
                     if (bonus == BonusType.PointsSm)
                     {
+                        //Increase score by 20 points
                         int numScore = Int32.Parse(Score.Text);
                         Settings.Score = numScore + 20;
                         Score.Text = Settings.Score.ToString();
@@ -263,17 +306,21 @@ namespace Snake2._0
 
                     if (bonus == BonusType.Retaliate)
                     {
-                        retaliate = true;
+                        //Allows snake to destoy enemy
+                        Settings.retaliate = true;
                     }
 
                     if (bonus == BonusType.ScoreMultiplier)
                     {
+                        //Multiplies current score by 2
                         int numScore = Int32.Parse(Score.Text);
-                        Score.Text = (numScore * 2).ToString();
+                        Settings.Score = numScore * 2;
+                        Score.Text = Settings.Score.ToString();
                     }
 
                     if (bonus == BonusType.Shrink)
                     {
+                        //Removes a link of the snake's body
                         if(player.getSnake().Count() > 4)
                         {
                             player.Shrink();
@@ -282,6 +329,7 @@ namespace Snake2._0
 
                     if (bonus == BonusType.Slow)
                     {
+                        //Marginally slow down the game speed
                         try
                         {
                             ActionTimer.Interval = 1500 / Settings.Speed;
@@ -291,8 +339,10 @@ namespace Snake2._0
                             MessageBox.Show(e.ToString());
                         }
                     }
-                
-                    new Collectible(maxXPos, maxYPos);
+                    //Make collectable disapear
+                    new Collectible(99, 99);
+                    //start timer
+                    collectable_timer.Start();
                 }
             }
             catch (Exception e)
@@ -378,33 +428,74 @@ namespace Snake2._0
                 this.Time.Text = time.ToString(@"hh\:mm\:ss");
             }
         }
-
+        /// <summary>
+        /// Select map 1
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mainScreen_map1ClickEvent(object sender, EventArgs e)
         {
             mapFactory = new Maps(1);
             StartGame();
         }
-
+        /// <summary>
+        /// Select map 0
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mainScreen_map2ClickEvent(object sender, EventArgs e)
         {
             mapFactory = new Maps(0);
             StartGame();
         }
-
+        /// <summary>
+        /// Select map 3
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mainScreen_map3ClickEvent(object sender, EventArgs e)
         {
             mapFactory = new Maps(2);
             StartGame();
         }
-
+        /// <summary>
+        /// End game's replay button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mainScreen_playAgainClickEvent(object sender, EventArgs e)
         {
             StartGame();
         }
-
+        /// <summary>
+        /// Menu screen "Exit" button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mainScreen_exitClickEvent(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        //Timer tick event responsible for spawning a new collectable
+        private void respawn_timer_Tick(object sender, EventArgs e)
+        {
+            //Makes sure the power-ups lose their effect when the next one spawns
+            new Collectible(maxXPos, maxYPos);
+            ActionTimer.Interval = 1000 / Settings.Speed;
+            Settings.retaliate = false;
+            collectable_timer.Stop();
+        }
+
+        /// <summary>
+        /// Respawn enemy AI timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AI_respawn_Tick(object sender, EventArgs e)
+        {
+            enemy = new Enemy(maxXPos, maxYPos);
+            AI_respawn.Stop();
         }
     }
 }
